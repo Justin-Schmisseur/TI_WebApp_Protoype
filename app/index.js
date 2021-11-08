@@ -1,3 +1,25 @@
+const webserverPath = 'http://localhost:8000'
+let br_connection_status
+
+setInterval(updateStatus, 1000)
+
+async function updateStatus(){
+    const response = await fetch(webserverPath+'/gw_bringup')
+    br_connection_status = await response.json()
+    //console.log(br_connection_status)
+    
+    if(br_connection_status)
+    {
+        console.log("br connected")
+        document.getElementById('gw_bringup_label').label = ""
+    }
+    else
+    {
+        console.log("br not connected")
+        document.getElementById('gw_bringup_label').label = "Please connect a border router"
+    }
+    
+}
 
 const initCytoscape = async () => {
     const response = await fetch('http://127.0.0.1:8000/public/data.json');
@@ -69,7 +91,7 @@ function intervalFunc() {
  
 }
 
-setInterval(intervalFunc, 500);
+//setInterval(intervalFunc, 500);
 
 
 var initComplete = false;
