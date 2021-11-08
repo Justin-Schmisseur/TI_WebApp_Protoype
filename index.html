@@ -1,0 +1,1330 @@
+<!doctype html>
+<!--
+%COPYRIGHTNOTICE%
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+*   Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+*   Neither the name of Texas Instruments Incorporated nor the names of
+its contributors may be used to endorse or promote products derived
+from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <link rel="icon" type="image/png" href="splash/gui_icon.png">
+
+    <title>TI WiSUN FAN Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script> if (typeof nw != 'undefined') {window.$ti_nw_main_window = true;} </script>
+    <script src="components/ti-core-assets/scripts/gcDesktop.js"></script>
+    <link rel="import" href="components/ti-core-databind/ti-core-databind.html">
+    <script src="app/cytoscape.min.js"></script>
+    <script src="app/index.js"></script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            height: 100%;
+            overflow-y: hidden;
+        }
+
+        design-gist-element-preview {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body class="ti-theme">
+<div id="loadDiv" style='width:100%; height:100%; z-index: 999999; background-color: #eeeeee; position: absolute;'>
+    <div style="width: 100%; height: 100%; background: url('./images/loading.gif') no-repeat center"></div>
+</div>
+<!-- ------------------------------------------------------------------------------------- -->
+<!--gist-begin-->
+<link rel="import" href="components/ti-core-stylesheets/ti-core-stylesheets.html">
+<link rel="import" href="components/ti-widget-readme/ti-widget-readme.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-container.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-label.html">
+<link rel="import" href="components/ti-widget-menubar/ti-widget-menubar.html">
+<link rel="import" href="components/ti-widget-menubar/ti-widget-filemenu.html">
+<link rel="import" href="components/ti-widget-menubar/ti-widget-editmenu.html">
+<link rel="import" href="components/ti-widget-menubar/ti-widget-helpmenu.html">
+<link rel="import" href="components/ti-widget-statusbar/ti-widget-statusbar.html">
+<link rel="import" href="components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="components/ti-core-databind/ti-transport-network.html">
+<link rel="import" href="components/ti-model-http/ti-model-http.html">
+<link rel="import" href="components/ti-model-http/ti-route-http.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-textbox.html">
+<link rel="import" href="components/ti-tile-wizard/ti-tile-led.html">
+<link rel="import" href="components/ti-tile-wizard/ti-tile-toggleswitch.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-tab.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-tabcontainer.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-tilecontainer.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-dialog.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-button.html">
+<link rel="import" href="components/ti-widget-menubar/ti-widget-menuaction.html">
+<link rel="import" href="components/ti-widget-menubar/ti-widget-menuitem.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-droplist.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-input.html">
+
+ 
+<template id="template_obj" is="dom-bind">
+    <style is="custom-style">
+	    #ti_widget_menubar {
+	  	    top: 0px;
+	  	    width: 100%;
+	  	    margin: 0px;
+            position: absolute;
+        }
+        html .viewport {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 28px;
+            top: 48px;
+            border: none;
+        }
+        .row {
+            padding: 10px;
+        }
+        .label {
+            width: 80px;
+        }
+        #cy {
+            height: 100%;
+            width: 500px;
+        }
+        #viewport {
+            overflow: hidden
+        }
+        #led_state {
+            width:231px;
+            height:200px;
+            border:solid 1px lightgray;
+        }
+        #tabcontainer {
+            width:14.75in;
+            height:7.45in;
+            position: absolute;
+            top: 35px;
+        }
+        #textbox_2 {
+            margin: 5px;
+        }
+        #label_10 {
+            margin: 5px;
+        }
+        #dialog {
+            position: absolute;
+            left: 203px;
+            top: 124px
+        }
+        #config_tab {
+            background-color: #ffffff;
+            width: 1418px;
+            height: 689px
+        }
+        #main_tab {
+            width: 1415px;
+            height: 691px
+        }
+        #mainset_container {
+            padding: 20px 10px 20px 10px;
+            position: absolute;
+            left: 898px;
+            top: 2px;
+            background-color: #ffffff;
+            height: 685px;
+            width: 515px;
+        }
+        #ping_tab {
+            background-color: #ffffff;
+            height: 689px
+        }
+        #label_32 {
+            width: 149px;
+        }
+        #label_4 {
+            height: 30px
+        }
+        #chspacing {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_31 {
+            width: 144px;
+        }
+        #container_30 {
+            width: 475px;
+        }
+        #ch0centerfreq {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_30 {
+            width: 144px;
+        }
+        #container_29 {
+            width: 475px;
+        }
+        #unicastchlist {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_29 {
+            width: 157px;
+        }
+        #container_28 {
+            width: 475px;
+        }
+        #network_nodetype {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_27 {
+            width: 149px;
+        }
+        #container_26 {
+            width: 475px;
+        }
+        #stackup {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_26 {
+            width: 148px;
+        }
+        #container_25 {
+            width: 475px;
+        }
+        #interfaceup {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_25 {
+            width: 148px;
+        }
+        #container_24 {
+            width: 475px;
+        }
+        #bcchfunction {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_24 {
+            width: 151px;
+        }
+        #container_23 {
+            width: 475px;
+        }
+        #ucchfunction {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            top: 7px;
+            left: 174px;
+        }
+        #label_23 {
+            width: 150px;
+        }
+        #container_22 {
+            width: 475px;
+        }
+        #bcintervall {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_22 {
+            width: 154px;
+        }
+        #container_21 {
+            width: 475px;
+        }
+        #ucdwellinterval {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            left: 174px;
+            top: 7px;
+        }
+        #label_21 {
+            width: 146px;
+        }
+        #container_20 {
+            width: 475px;
+        }
+        #bcdwellinterval {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_20 {
+            width: 144px;
+        }
+        #container_19 {
+            width: 475px;
+        }
+        #network_panid {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_19 {
+            width: 149px;
+        }
+        #container_18 {
+            width: 475px;
+        }
+        #ncp_modeid {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_18 {
+            width: 148px;
+        }
+        #container_17 {
+            width: 475px;
+        }
+        #ncp_region {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_17 {
+            width: 152px;
+        }
+        #container_16 {
+            width: 475px;
+        }
+        #ncp_txpower {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #label_16 {
+            width: 149px;
+        }
+        #container_15 {
+            width: 475px;
+        }
+        #ncp_ccathreshold {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            left: 174px;
+            top: 7px;
+        }
+        #label_15 {
+            width: 149px;
+        }
+        #container_14 {
+            width: 475px;
+        }
+        #ncp_version {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            left: 174px;
+            top: 7px;
+        }
+        #container_13 {
+            width: 475px;
+        }
+        #network_protocolversion {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            left: 174px;
+            top: 7px;
+        }
+        #container_12 {
+            width: 475px;
+        }
+        #network_name {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #label_28 {
+            width: 150px;
+        }
+        #container_27 {
+            width: 475px;
+        }
+        #ncp_hardwareaddress {
+            width: 219px;
+            height: 23px;
+            left: 174px;
+            top: 7px;
+            position: absolute;
+        }
+        #container_8 {
+            width: 475px;
+        }
+        #ncp_interfacetype {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            left: 174px;
+            top: 7px;
+        }
+        #container_7 {
+            width: 475px;
+        }
+        #mainget_container {
+            padding: 20px 10px 20px 10px;
+            position: absolute;
+            left: 384px;
+            top: 3px;
+            background-color: #ffffff;
+            height: 685px;
+            width: 513px;
+        }
+        #led_state_green {
+            position: absolute;
+            left: 236px;
+            top: 231px;
+        }
+        #toggle_led_green {
+            width: 231px;
+            position: absolute;
+            left: 4px;
+            top: 231px;
+        }
+        #led_state_red {
+            position: absolute;
+            left: 236px;
+            top: 32px;
+            height: 197px;
+        }
+        #toggle_led_red {
+            width:231px;
+            height:200px;
+            border:solid 1px lightgray;
+            position: absolute;
+            left: 4px;
+            top: 30px;
+        }
+        #label_3 {
+            position: absolute;
+            left: 3px;
+            top: 3px;
+        }
+        #container_2 {
+            height: 31.286em;
+            width:28.214em;
+            border: 1px solid black;
+            position: absolute;
+            left: 1019px;
+            top: 2px;
+        }
+        #get_ipv6alladdresses {
+            position: absolute;
+            left: 3px;
+            top: 27px;
+            width: 360px;
+            height: 610px;
+            opacity: 1;
+        }
+        #get_dodagroute {
+            position: absolute;
+            left: 3px;
+            top: 137px;
+            width: 360px;
+            height: 500px;
+            opacity: 1;
+        }
+        #dodagroute_label {
+            position: absolute;
+            left: 3px;
+            top: 108px;
+            width: 212px;
+        }
+        #dodagroute_tab {
+            height: 640px;
+            width: 365px;
+        }
+        #get_connecteddevices {
+            position: absolute;
+            left: 3px;
+            top: 27px;
+            width: 360px;
+            height: 610px;
+            opacity: 1;
+        }
+        #get_numconnecteddevices {
+            position: absolute;
+            left: 216px;
+            top: 2px;
+            width: 37px;
+        }
+        #connecteddevices_label {
+            position: absolute;
+            left: 1px;
+            top: 0px;
+            width: 212px;
+        }
+        #connectedevices_tab {
+            width: 365px;
+            height: 640px;
+        }
+        #macfilterlist_tab {
+            width:365px;
+            height:640px;
+            position: absolute;
+            left: 9px;
+            top: 34px;
+        }
+        #getotherlist_dropdown {
+            width:145px;
+            height:auto;
+            position: absolute;
+            left: 13px;
+            top: 7px;
+            background-color: #ffffff;
+        }
+        #getother_tilecontainer_1 {
+            height:685px;
+            width:27.285em;
+            overflow:auto;
+            position: absolute;
+            background-color: #b30000;
+            left: 0;
+        }
+        #label_5 {
+            width: 159px
+        }
+        #label_6 {
+            width: 159px
+        }
+        #label_13 {
+            width: 161px
+        }
+        #label_14 {
+            width: 160px
+        }
+        #macfiltermode {
+            width: 219px;
+            height: 23px;
+            top: 7px;
+            left: 174px;
+            position: absolute;
+        }
+        #container_33 {
+            width: 475px;
+        }
+        #broadcastchlist {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            top: 7px;
+            left: 174px;
+        }
+        #label_35 {
+            width: 157px;
+        }
+        #container_34 {
+            width: 475px;
+        }
+        #asynchchlist {
+            width: 219px;
+            height: 23px;
+            position: absolute;
+            left: 174px;
+            top: 7px;
+        }
+        #label_36 {
+            width: 157px;
+        }
+        #container_36 {
+            width: 475px;
+        }
+        #get_networkprotocalversion_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px
+        }
+        #get_ncpversion_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ncpinterfacetype_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ncphardwareaddress_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ncpccathreshold_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ncptxpower_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ncpregion_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ncpmodelid_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_chspacing_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ch0centerfreq_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_networkpanid_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_bcdwellinterval_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ucdwellinterval_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_bcinterval_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_ucchfunction_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_bcchfunction_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_macfiltermode_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_interfaceup_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_stackup_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_networknodetype_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_networkname_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_unicastchlist_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_broadcastchlist_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #get_asynchchlist_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #set_ncpccathreshold_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_33 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_31 {
+            width: 475px;
+            height: 50px;
+        }
+        #ncpccathreshold_input {
+            position: relative;
+            height: 30px
+        }
+        #set_ncptxpower_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_34 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_32 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_broadcastchlist_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_37 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_33 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_asynchchlist_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_38 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_34 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_networkpanid_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_39 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_35 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_bcdwellinterval_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_40 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_36 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_ucdwellinterval_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_41 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_37 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_bcinterval_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_42 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_38 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_ucchfunction_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #label_43 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_39 {
+            width: 475px;
+            height: 50px;
+        }
+        #ncptxpower_input {
+            height: 30px;
+            position: relative
+        }
+        #broadcastchlist_input {
+            position: relative;
+            height: 30px
+        }
+        #asynchchlist_input {
+            position: relative;
+            height: 30px
+        }
+        #networkpanid_input {
+            height: 30px
+        }
+        #bcdwellinterval_input {
+            height: 30px
+        }
+        #ucdwellinterval_input {
+            height: 30px
+        }
+        #bcinterval_input {
+            height: 30px
+        }
+        #ucchfunction_input {
+            height: 30px
+        }
+        #set_bcchfunction_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #bcchfunction_input {
+            height: 30px;
+        }
+        #label_44 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_40 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_macfiltermode_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #macfiltermode_input {
+            height: 30px;
+        }
+        #label_45 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_41 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_interfaceup_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #interfaceup_input {
+            height: 30px;
+        }
+        #label_46 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_42 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_stackup_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #stackup_input {
+            height: 30px;
+        }
+        #label_47 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_43 {
+            width: 475px;
+            height: 50px;
+        }
+        #set_networkname_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #networkname_input {
+            height: 30px;
+        }
+        #label_48 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_44 {
+            width: 475px;
+            height: 50px;
+        }
+        #dodagroutedest_input {
+            height: 30px;
+            position: absolute;
+            left: 10px;
+            top: 33px;
+        }
+        #label_49 {
+            width: 149px;
+            position: absolute;
+            left: 10px;
+            top: 8px;
+        }
+        #ti_widget_containercontainer_45 {
+            width: 373px;
+            height: 103px;
+            position: absolute;
+            left: 0px;
+            top: 3px;
+            background-color: #ffffff;
+        }
+        #ipv6alladdresses_label {
+            left: 1px;
+            top: 0px;
+            width: 212px
+        }
+        #set_dodagroutedest_button {
+            position: absolute;
+            left: 10px;
+            width: 60px;
+            height: 27px;
+            top: 69px;
+        }
+        #macfilterlist_label_1 {
+            width: 212px;
+        }
+        #get_macfilterlist {
+            position: absolute;
+            left: 3px;
+            top: 27px;
+            width: 360px;
+            height: 610px;
+            opacity: 1;
+        }
+        #macfilterlist_label {
+            left: 1px;
+            width: 212px;
+            position: absolute;
+        }
+        #set_unicastchlist_button {
+            position: absolute;
+            left: 400px;
+            width: 60px;
+            height: 27px;
+        }
+        #unicastchlist_input {
+            position: relative;
+            height: 30px;
+        }
+        #label_50 {
+            width: 149px;
+        }
+        #ti_widget_containercontainer_46 {
+            width: 475px;
+            height: 50px;
+        }
+    </style>
+
+    <ti-widget-readme id="readmeViewer" pin></ti-widget-readme>
+    <ti-core-stylesheets  id="ti_core_stylesheets"></ti-core-stylesheets>
+    <ti-widget-menubar id="ti_widget_menubar" product-name="Application" layout pin>
+        <ti-widget-filemenu id="ti_widget_filemenu" layout></ti-widget-filemenu>
+        <ti-widget-editmenu id="ti_widget_editmenu" layout></ti-widget-editmenu>
+        <ti-widget-helpmenu id="ti_widget_helpmenu" layout></ti-widget-helpmenu>
+        <ti-widget-menuitem id="menuitem" layout name="Settings">
+            <ti-widget-menuaction id="menuaction" name="Config" icon-path="container_6"></ti-widget-menuaction>
+        </ti-widget-menuitem>
+    </ti-widget-menubar>
+    <ti-widget-container auto-scroll id="viewport" pin class="viewport" horizontal layout>
+        <div id="cy" one flex></div>
+    </ti-widget-container>
+    <ti-transport-network id="ti_transport_network" hidden>
+    <ti-model-http id="http_model" hidden url="http://127.0.0.1:8000">
+    <ti-route-http id="ti_route_http_rled" hidden content-type="json" verb="BOTH" path="/rled" name="rled"></ti-route-http>
+    <ti-route-http id="ti_route_http_gled" hidden content-type="json" verb="BOTH" path="/gled" name="gled"></ti-route-http>
+    </ti-model-http>
+    </ti-transport-network>
+    <ti-widget-tabcontainer id="tabcontainer" layout selected-index="0">
+        <ti-widget-tab id="main_tab" name="Main">
+        <ti-widget-container id="container_2" auto-scroll>
+            <ti-widget-label id="label_3" label="Actions:" font-size="x-large"></ti-widget-label>
+            <ti-tile-toggleswitch id="toggle_led_red" font-size="medium" toggle-color="#f41010" title-text="Toggle Red Router LED"></ti-tile-toggleswitch>
+            <ti-tile-led id="led_state_red" title-text="Red LED State" font-size="medium" color="#f41010" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
+            <ti-tile-toggleswitch id="toggle_led_green" font-size="medium" toggle-color="#10f43e" title-text="Toggle Green Router LED"></ti-tile-toggleswitch>
+            <ti-tile-led id="led_state_green" title-text="Green LED State" font-size="medium" color="#10f43e" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
+        </ti-widget-container>
+            <ti-widget-dialog id="dialog" heading="Entitled" desc="Toggle the visible-in-designer property to show the dialog in the Designer" with-backdrop>
+                <ti-widget-container id="container_3" layout horizontal center>
+                    <ti-widget-label id="label_10" label="Value:"></ti-widget-label>
+                    <ti-widget-textbox id="textbox_2" flex one></ti-widget-textbox>
+                </ti-widget-container>
+
+                <ti-widget-container id="container_5" class="actionBar" layout horizontal>
+                    <ti-widget-button id="button" label="Cancel" dialog-dismiss></ti-widget-button>
+                    <ti-widget-button id="button_1" label="OK" dialog-confirm></ti-widget-button>
+                </ti-widget-container>
+            </ti-widget-dialog>
+        </ti-widget-tab>
+        <ti-widget-tab id="config_tab" name="Config">
+            <ti-widget-tilecontainer id="getother_tilecontainer_1" auto-scroll wrap tile-title-background-color="#000000">
+                <ti-widget-droplist id="getotherlist_dropdown" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="Mac Filter List" selected-value="{{tabIndex}}" selected-index="3"></ti-widget-droplist>
+                <ti-widget-tabcontainer id="macfilterlist_tab" selected-index="{{tabIndex}}" layout hide-tab-labels>
+                    <ti-widget-tab id="connectedevices_tab">
+                        <ti-widget-label id="connecteddevices_label" label="Connected Devices:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                        <ti-widget-textbox id="get_numconnecteddevices"></ti-widget-textbox>
+                        <ti-widget-textbox id="get_connecteddevices"></ti-widget-textbox>
+                    </ti-widget-tab>
+                    <ti-widget-tab id="dodagroute_tab">
+                        <ti-widget-container id="ti_widget_containercontainer_45" auto-scroll class="row" horizontal layout center>
+                            <ti-widget-label id="label_49" class="label" label="DodagRouteDest:" font-size="x-large"></ti-widget-label>
+                            <ti-widget-input id="dodagroutedest_input" label="DodagRouteDest"></ti-widget-input>
+                            <ti-widget-button id="set_dodagroutedest_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                        </ti-widget-container>
+                        <ti-widget-label id="dodagroute_label" label="Dodag Route:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                        <ti-widget-textbox id="get_dodagroute"></ti-widget-textbox>
+                    </ti-widget-tab>
+                    <ti-widget-tab id="ipv6alladdresses_tab">
+                        <ti-widget-label id="ipv6alladdresses_label" label="IPV6 Addresses:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                        <ti-widget-textbox id="get_ipv6alladdresses"></ti-widget-textbox>
+                    </ti-widget-tab>
+                    <ti-widget-tab id="macfilterlist_tab_1">
+                    <ti-widget-label id="macfilterlist_label" label="MacFilterList:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                        <ti-widget-textbox id="get_macfilterlist"></ti-widget-textbox>
+                    </ti-widget-tab>
+                </ti-widget-tabcontainer>
+            </ti-widget-tilecontainer>
+            <ti-widget-container id="mainset_container" vertical layout one flex auto-scroll>
+                <ti-widget-label id="label_4" label="Set Properties:" font-size="x-large"></ti-widget-label>
+                <ti-widget-container id="ti_widget_containercontainer_31" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_33" class="label" label="NCP:CCAThreshold:"></ti-widget-label>
+                    <ti-widget-input id="ncpccathreshold_input" label="NCP:CCAThreshold"></ti-widget-input>
+                    <ti-widget-button id="set_ncpccathreshold_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_32" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_34" class="label" label="NCP:TXPower:"></ti-widget-label>
+                    <ti-widget-input id="ncptxpower_input" label="NCP:TXPower"></ti-widget-input>
+                    <ti-widget-button id="set_ncptxpower_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_46" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_50" class="label" label="UnicastCHList:"></ti-widget-label>
+                    <ti-widget-input id="unicastchlist_input" label="unicastCHList"></ti-widget-input>
+                    <ti-widget-button id="set_unicastchlist_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_33" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_37" class="label" label="BroadcastCHList:"></ti-widget-label>
+                    <ti-widget-input id="broadcastchlist_input" label="BroadcastCHList"></ti-widget-input>
+                    <ti-widget-button id="set_broadcastchlist_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_34" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_38" class="label" label="AsynchCHList:"></ti-widget-label>
+                    <ti-widget-input id="asynchchlist_input" label="AsynchCHList"></ti-widget-input>
+                    <ti-widget-button id="set_asynchchlist_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_35" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_39" class="label" label="Network:PanID:"></ti-widget-label>
+                    <ti-widget-input id="networkpanid_input" label="Network:PanID"></ti-widget-input>
+                    <ti-widget-button id="set_networkpanid_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_36" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_40" class="label" label="BCDWellInterval:"></ti-widget-label>
+                    <ti-widget-input id="bcdwellinterval_input" label="BCDWellInterval"></ti-widget-input>
+                    <ti-widget-button id="set_bcdwellinterval_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_37" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_41" class="label" label="UCDWellInterval"></ti-widget-label>
+                    <ti-widget-input id="ucdwellinterval_input" label="UCDWellInterval"></ti-widget-input>
+                    <ti-widget-button id="set_ucdwellinterval_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_38" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_42" class="label" label="BCInterval:"></ti-widget-label>
+                    <ti-widget-input id="bcinterval_input" label="BCInterval"></ti-widget-input>
+                    <ti-widget-button id="set_bcinterval_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_39" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_43" class="label" label="UCCHFunction"></ti-widget-label>
+                    <ti-widget-input id="ucchfunction_input" label="UCCHFunction"></ti-widget-input>
+                    <ti-widget-button id="set_ucchfunction_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_40" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_44" class="label" label="BCCHFunction:"></ti-widget-label>
+                    <ti-widget-input id="bcchfunction_input" label="BCCHFunction"></ti-widget-input>
+                    <ti-widget-button id="set_bcchfunction_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_41" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_45" class="label" label="MacFilterMode:"></ti-widget-label>
+                    <ti-widget-input id="macfiltermode_input" label="MacFiltermode"></ti-widget-input>
+                    <ti-widget-button id="set_macfiltermode_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_42" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_46" class="label" label="Interface:Up"></ti-widget-label>
+                    <ti-widget-input id="interfaceup_input" label="Interface:Up"></ti-widget-input>
+                    <ti-widget-button id="set_interfaceup_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_43" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_47" class="label" label="Stack:Up"></ti-widget-label>
+                    <ti-widget-input id="stackup_input" label="Stack:Up"></ti-widget-input>
+                    <ti-widget-button id="set_stackup_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="ti_widget_containercontainer_44" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_48" class="label" label="Network:Name:"></ti-widget-label>
+                    <ti-widget-input id="networkname_input" label="Network:Name"></ti-widget-input>
+                    <ti-widget-button id="set_networkname_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+            </ti-widget-container>
+            <ti-widget-container id="mainget_container" vertical layout one flex auto-scroll>
+                <ti-widget-label id="label_2" label="Get Properties:" font-size="x-large"></ti-widget-label>
+                <ti-widget-container id="container_12" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-button id="get_networkprotocalversion_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                    <ti-widget-textbox id="network_protocolversion" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-label id="label_13" class="label" label="Network:ProtocalVersion:"></ti-widget-label>
+                </ti-widget-container>
+                <ti-widget-container id="container_13" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-textbox id="ncp_version" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-label id="label_14" class="label" label="NCP:Version:"></ti-widget-label>
+                    <ti-widget-button id="get_ncpversion_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_7" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_5" class="label" label="NCP:InterfaceType:"></ti-widget-label>
+                    <ti-widget-textbox id="ncp_interfacetype" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ncpinterfacetype_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_8" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_6" class="label" label="NCP:HardwareAddress:"></ti-widget-label>
+                    <ti-widget-textbox id="ncp_hardwareaddress" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ncphardwareaddress_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_14" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_15" class="label" label="NCP:CCAThreshold:"></ti-widget-label>
+                    <ti-widget-textbox id="ncp_ccathreshold" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ncpccathreshold_button" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_15" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_16" class="label" label="NCP:TXPower:"></ti-widget-label>
+                    <ti-widget-textbox id="ncp_txpower" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ncptxpower_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_16" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_17" class="label" label="NCP:Region:"></ti-widget-label>
+                    <ti-widget-textbox id="ncp_region" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ncpregion_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_17" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_18" class="label" label="NCP:ModeID:"></ti-widget-label>
+                    <ti-widget-textbox id="ncp_modeid" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ncpmodelid_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_28" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_29" class="label" label="UnicastCHList:"></ti-widget-label>
+                    <ti-widget-textbox id="unicastchlist" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_unicastchlist_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_34" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_35" class="label" label="BroadcastCHList:"></ti-widget-label>
+                    <ti-widget-textbox id="broadcastchlist" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_broadcastchlist_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_36" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_36" class="label" label="AsynchCHList:"></ti-widget-label>
+                    <ti-widget-textbox id="asynchchlist" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_asynchchlist_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_30" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_31" class="label" label="CHSpacing:"></ti-widget-label>
+                    <ti-widget-textbox id="chspacing" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_chspacing_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_29" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_30" class="label" label="CH0CenterFreq:"></ti-widget-label>
+                    <ti-widget-textbox id="ch0centerfreq" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ch0centerfreq_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_18" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_19" class="label" label="Network:Panid:"></ti-widget-label>
+                    <ti-widget-textbox id="network_panid" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_networkpanid_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_19" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_20" class="label" label="BCDWellInterval:"></ti-widget-label>
+                    <ti-widget-textbox id="bcdwellinterval" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_bcdwellinterval_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_20" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_21" class="label" label="UCDWellInterval:"></ti-widget-label>
+                    <ti-widget-textbox id="ucdwellinterval" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ucdwellinterval_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_21" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_22" class="label" label="BCInterval:"></ti-widget-label>
+                    <ti-widget-textbox id="bcintervall" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_bcinterval_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_22" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_23" class="label" label="UCCHFunction:"></ti-widget-label>
+                    <ti-widget-textbox id="ucchfunction" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_ucchfunction_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_23" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_24" class="label" label="BCCHFunction:"></ti-widget-label>
+                    <ti-widget-textbox id="bcchfunction" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_bcchfunction_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_33" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_32" class="label" label="MacFilterMode:"></ti-widget-label>
+                    <ti-widget-textbox id="macfiltermode" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_macfiltermode_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_24" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_25" class="label" label="Interface:Up:"></ti-widget-label>
+                    <ti-widget-textbox id="interfaceup" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_interfaceup_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_25" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_26" class="label" label="Stack:Up:"></ti-widget-label>
+                    <ti-widget-textbox id="stackup" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_stackup_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_26" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_27" class="label" label="Network:NodeType:"></ti-widget-label>
+                    <ti-widget-textbox id="network_nodetype" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_networknodetype_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-container id="container_27" auto-scroll class="row" horizontal layout center>
+                    <ti-widget-label id="label_28" class="label" label="Network:Name:"></ti-widget-label>
+                    <ti-widget-textbox id="network_name" one flex disabled class="value"></ti-widget-textbox>
+                    <ti-widget-button id="get_networkname_button" label="Update" button-type="primary" raised bindable-trigger="3" layout horizontal></ti-widget-button>
+                </ti-widget-container>
+                <ti-widget-label id="macfilterlist_label_1" label="Mac Filter List:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+            </ti-widget-container>
+            </ti-widget-tab>
+            <ti-widget-tab id="ping_tab" name="Ping">
+            </ti-widget-tab>
+    </ti-widget-tabcontainer>
+    <ti-widget-statusbar style="height: 51px; width: 1416px;"></ti-widget-statusbar>
+</template><!--gist-end-->
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+<script>
+    // Do not edit this file - it is automatically generated.  Please edit index.js
+	addEventListener('WebComponentsReady', function () {
+        var loadDiv = document.querySelector("#loadDiv")
+        if (loadDiv) {
+			loadDiv.parentNode.removeChild(loadDiv);
+        }
+	});
+</script>
+</body>
+</html>
