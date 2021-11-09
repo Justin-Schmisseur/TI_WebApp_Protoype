@@ -1,5 +1,5 @@
 const webserverPath = "http://localhost:8000";
-let br_connection_status;
+let br_connection_status, propValues;
 
 setInterval(updateStatus, 1000);
 
@@ -18,6 +18,77 @@ async function updateStatus() {
   }
 }
 
+
+/********* Filling in Properties *********/
+// Get properties and fillIn every 2s
+setInterval(getProps, 2000)
+// Update properties every 30s
+setInterval(updateProps, 30000)
+function setButtonClicked(buttonId) {
+    let property, newValue
+    switch(buttonId) {
+        case 'set_ncpccathreshold_button': {
+            property = 'NCP:CCAThreshold'
+            newValue = $('#ncpccathreshold_input').val()
+            $('#ncpccathreshold_input').val(this.defaultValue)
+            break;
+        }
+        case 'set_networkpanid_button': {
+            property = 'Network:Panid'
+            newValue = $('#networkpanid_input').val()
+            $('#networkpanid_input').val(this.defaultValue)
+            break;
+        }
+    }
+    setProp(property, newValue)
+}
+function setProp(property, newValue) {
+    fetch(wfanServerPath + '/setProp?property=' + property + '&newValue=' + newValue)
+}
+async function getProps() {
+  const response = await fetch(webserverPath + '/getProps')
+  propValues = await response.json()
+  console.log(propValues)
+  fillIn()
+}
+function updateProps() {
+  fetch(webserverPath + '/updateProps')
+}
+function fillIn() {
+  $('#network_protocolversion').val(propValues['NCP:ProtocolVersion'])
+  $('#ncp_version').val(propValues['NCP:Version'])
+  $('#ncp_interfacetype').val(propValues['NCP:InterfaceType'])
+  $('#ncp_hardwareaddress').val(propValues['NCP:HardwareAddress'])
+  $('#ncp_ccathreshold').val(propValues['NCP:CCAThreshold'])
+  $('#ncp_txpower').val(propValues['NCP:TXPower'])
+  $('#ncp_region').val(propValues['NCP:Region'])
+  $('#ncp_modeid').val(propValues['NCP:ModeID'])
+  $('#unicastchlist').val(propValues['unicastchlist'])
+  $('#broadcastchlist').val(propValues['broadcastchlist'])
+  $('#asynchchlist').val(propValues['asyncchlist'])
+  $('#chspacing').val(propValues['chspacing'])
+  $('#ch0centerfreq').val(propValues['ch0centerfreq'])
+  $('#network_panid').val(propValues['Network:Panid'])
+  $('#bcdwellinterval').val(propValues['bcdwellinterval'])
+  $('#ucdwellinterval').val(propValues['ucdwellinterval'])
+  $('#bcintervall').val(propValues['bcinterval'])
+  $('#ucchfunction').val(propValues['ucchfunction'])
+  $('#bcchfunction').val(propValues['bcchfunction'])
+  $('#macfiltermode').val(propValues['macfiltermode'])
+  $('#interfaceup').val(propValues['Interface:Up'])
+  $('#stackup').val(propValues['Stack:Up'])
+  $('#network_nodetype').val(propValues['Network:NodeType'])
+  $('#network_name').val(propValues['Network:Name'])
+  $('#get_numconnecteddevices').val(propValues['numconnected'])
+  $('#get_connecteddevices').val(propValues['connecteddevices'])
+  $('#get_dodagroute').val(propValues['dodagroute'])
+  $('#get_ipv6alladdresses').val(propValues['IPv6:AllAddresses'])
+  $('#get_macfilterlist').val(propValues['macfilterlist'])
+}
+/*****************************************/
+
+
+//******* Cytoscape stuff ************
 const initCytoscape = async () => {
   const response = await fetch("http://127.0.0.1:8000/public/data.json");
   const data = await response.json();
