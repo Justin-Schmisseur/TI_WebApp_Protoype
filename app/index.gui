@@ -1248,6 +1248,7 @@
             </ti-widget-container>
             </ti-widget-tab>
             <ti-widget-tab id="ping_tab" name="Ping">
+	    	<iframe id="ping_iframe" src="app/ping/index.html" style="width:100%; height:100vh;"></iframe>
             </ti-widget-tab>
     </ti-widget-tabcontainer>
     <ti-widget-statusbar style="height: 51px; width: 1416px;"></ti-widget-statusbar>
