@@ -970,6 +970,13 @@
             width: 475px;
             height: 50px;
         }
+        #gw_bringup_label {
+            position: absolute;
+            left: 2px;
+            top: 161px;
+            width: 1016px;
+            height: 275px
+        }
     </style>
 
     <ti-widget-readme id="readmeViewer" pin></ti-widget-readme>
@@ -1011,6 +1018,7 @@
                     <ti-widget-button id="button_1" label="OK" dialog-confirm></ti-widget-button>
                 </ti-widget-container>
             </ti-widget-dialog>
+            <ti-widget-label id="gw_bringup_label" label="Please connect a border router" text-align="center" font-size="xx-large" font-weight="900"></ti-widget-label>
         </ti-widget-tab>
         <ti-widget-tab id="config_tab" name="Config">
             <ti-widget-tilecontainer id="getother_tilecontainer_1" auto-scroll wrap tile-title-background-color="#000000">
