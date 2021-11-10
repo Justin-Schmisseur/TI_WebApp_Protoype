@@ -45,6 +45,16 @@ function setButtonClicked(buttonId) {
 function setProp(property, newValue) {
     fetch(wfanServerPath + '/setProp?property=' + property + '&newValue=' + newValue)
 }
+
+
+// let Stack_up = setInterval(getProp('Stack:up'), 2000)
+
+// async function getProp(property) {
+//   const response = fetch(wfanServerPath + '/getProp?property=' + property)
+//   propValue = await response.json()
+//   return propValue
+// }
+
 async function getProps() {
   const response = await fetch(webserverPath + '/getProps')
   propValues = await response.json()
