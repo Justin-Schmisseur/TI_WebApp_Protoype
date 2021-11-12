@@ -20,6 +20,10 @@ files =glob.glob("**", recursive=True )
 files = list(filter(lambda x: should_include(x), files ))
 
 #%%
+
+if not os.path.exists('build'):
+    os.makedirs('build')
+
 timestamp = time.strftime('%b-%d-%Y_%H%M', time.localtime())
 project_name = f"TI-WISUN-WebApp-{timestamp}"
 
