@@ -2049,7 +2049,7 @@
       </ti-widget-container>
       <ti-widget-container id="container_60" auto-scroll class="row" horizontal layout center>
         <ti-widget-button id="save" onClick="setMainProps()" label="Save" button-type="primary" raised></ti-widget-button>
-        <ti-widget-button id="refresh" label="Refresh" button-type="secondary" raised></ti-widget-button>
+        <ti-widget-button id="refresh" onClick="resetMainProps()" label="Reset" button-type="secondary" raised></ti-widget-button>
       </ti-widget-container>
       <ti-widget-radio-group id="group" selected-text="Small">
       </ti-widget-radio-group>

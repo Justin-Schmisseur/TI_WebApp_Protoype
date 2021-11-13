@@ -106,12 +106,24 @@ function setMainProps() {
     noUpdateProps = []
 }
 
+//When refresh button is pressed, all changed properties are refreshed to old values
+function resetMainProps() {
+    noUpdateProps = []
+    fillIn()
+}
+
 function fillIn() {
+
+    console.log(noUpdateProps.length)
+
     for(let id in idPropMap) {
         const _id = '#' + id, prop = idPropMap[id]
         // If property isn't in noUpdateProps then update it
         if(!noUpdateProps.includes(prop)) {
-            $(id).val(propValues[prop])
+            if(_id == '#ncp_txpower_1') {
+                console.log(propValues[prop])
+            }
+            $(_id).val(propValues[prop])
         }
     }
 }
