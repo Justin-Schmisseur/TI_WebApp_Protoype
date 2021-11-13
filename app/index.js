@@ -1,7 +1,45 @@
+const idPropMap = {
+    network_protocolversion_1: 'NCP:ProtocolVersion',
+    ncp_version_1: 'NCP:Version',
+    ncp_interfacetype_1: 'NCP:InterfaceType',
+    ncp_hardwareaddress_1: 'NCP:HardwareAddress',
+    ncp_ccathreshold_1: 'NCP:CCAThreshold',
+    ncp_txpower_1: 'NCP:TXPower',
+    ncp_region_1: 'NCP:Region',
+    ncp_modeid_1: 'NCP:ModeID',
+    unicastchlist_1: 'unicastchlist',
+    broadcastchlist_1: 'broadcastchlist',
+    asynchchlist_1: 'asyncchlist',
+    chspacing_1: 'chspacing',
+    ch0centerfreq_1: 'ch0centerfreq',
+    network_panid_1: 'Network:Panid',
+    bcdwellinterval_1: 'bcdwellinterval',
+    ucdwellinterval_1: 'ucdwellinterval',
+    bcintervall_1: 'bcinterval',
+    ucchfunction_1: 'ucchfunction',
+    bcchfunction_1: 'bcchfunction',
+    macfiltermode_1: 'macfiltermode',
+    interfaceup_1: 'Interface:Up',
+    stackup_1: 'Stack:Up',
+    network_nodetype_1: 'Network:NodeType',
+    network_name_1: 'Network:Name',
+    get_numconnecteddevices_1: 'numconnected',
+    get_connecteddevices_1: 'connecteddevices',
+    get_dodagroute_1: 'dodagroute',
+    get_ipv6alladdresses_1: 'IPv6:AllAddresses',
+    get_macfilterlist_1: 'macfilterlist'
+}
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
 const webserverPath = "http://localhost:8000";
 let br_connection_status, propValues;
 
-setInterval(updateStatus, 1000);
+let noUpdateProps = []
+
+// setInterval(updateStatus, 1000);
 
 async function updateStatus() {
   const response = await fetch(webserverPath + "/gw_bringup");
@@ -20,70 +58,77 @@ async function updateStatus() {
 
 
 /********* Filling in Properties *********/
-// Get properties and fillIn every 2s
-setInterval(getProps, 2000)
-// Update properties every 30s
-setInterval(updateProps, 30000)
-function setButtonClicked(buttonId) {
-    let property, newValue
-    switch(buttonId) {
-        case 'set_ncpccathreshold_button': {
-            property = 'NCP:CCAThreshold'
-            newValue = $('#ncpccathreshold_input').val()
-            $('#ncpccathreshold_input').val(this.defaultValue)
-            break;
+// // Get properties and fillIn every 2s
+// setInterval(getProps, 2000)
+// // Update properties every 30s
+// setInterval(updateProps, 30000)
+
+setInterval(function() {
+    getProps()
+    updateProps()
+}, 5000)
+
+
+// Handles clicking inside and outside of textboxes
+window.addEventListener('click', function(e){
+    for(let id in idPropMap) {
+        const _id = '#' + id, prop = idPropMap[id]
+
+        // if clicked on textbox
+        if (document.getElementById(id).contains(e.target)){
+            // Reset text for user to type into
+            $(_id).val('')
+            // Add prop to noUpdateProps so it doesn't auto-update while user is typing
+            noUpdateProps.push(prop)
         }
-        case 'set_networkpanid_button': {
-            property = 'Network:Panid'
-            newValue = $('#networkpanid_input').val()
-            $('#networkpanid_input').val(this.defaultValue)
-            break;
+        // if clicked outside textbox
+        else{
+            if( $(_id).val() === '' ) {
+                // Set value to the default
+                $(_id).val(propValues[ prop ])
+                // Remove item from noUpdateProps so it can update next time
+                noUpdateProps = noUpdateProps.filter(item => item !== prop)
+            } else {
+                // setProp(prop,$(_id).val())
+            }
         }
     }
-    setProp(property, newValue)
+});
+
+// When save button is pressed, all changed properties are set to new values
+function setMainProps() {
+    for(let index in noUpdateProps) {
+        const prop = noUpdateProps[index], _id = '#' + getKeyByValue(idPropMap, prop)
+        // Set the property to the user specified value
+        setProp(prop, $(_id).val())
+    }
+    // Reset noUpdateProps
+    noUpdateProps = []
 }
+
+function fillIn() {
+    for(let id in idPropMap) {
+        const _id = '#' + id, prop = idPropMap[id]
+        // If property isn't in noUpdateProps then update it
+        if(!noUpdateProps.includes(prop)) {
+            $(id).val(propValues[prop])
+        }
+    }
+}
+
 function setProp(property, newValue) {
-    fetch(wfanServerPath + '/setProp?property=' + property + '&newValue=' + newValue)
+    fetch(webserverPath + '/setProp?property=' + property + '&newValue=' + newValue)
 }
+
 async function getProps() {
   const response = await fetch(webserverPath + '/getProps')
   propValues = await response.json()
   console.log(propValues)
   fillIn()
 }
+
 function updateProps() {
   fetch(webserverPath + '/updateProps')
-}
-function fillIn() {
-  $('#network_protocolversion_1').val(propValues['NCP:ProtocolVersion'])
-  $('#ncp_version_1').val(propValues['NCP:Version'])
-  $('#ncp_interfacetype_1').val(propValues['NCP:InterfaceType'])
-  $('#ncp_hardwareaddress_1').val(propValues['NCP:HardwareAddress'])
-  $('#ncp_ccathreshold_1').val(propValues['NCP:CCAThreshold'])
-  $('#ncp_txpower_1').val(propValues['NCP:TXPower'])
-  $('#ncp_region_1').val(propValues['NCP:Region'])
-  $('#ncp_modeid_1').val(propValues['NCP:ModeID'])
-  $('#unicastchlist_1').val(propValues['unicastchlist'])
-  $('#broadcastchlist_1').val(propValues['broadcastchlist'])
-  $('#asynchchlist_1').val(propValues['asyncchlist'])
-  $('#chspacing_1').val(propValues['chspacing'])
-  $('#ch0centerfreq_1').val(propValues['ch0centerfreq'])
-  $('#network_panid_1').val(propValues['Network:Panid'])
-  $('#bcdwellinterval_1').val(propValues['bcdwellinterval'])
-  $('#ucdwellinterval_1').val(propValues['ucdwellinterval'])
-  $('#bcintervall_1').val(propValues['bcinterval'])
-  $('#ucchfunction_1').val(propValues['ucchfunction'])
-  $('#bcchfunction_1').val(propValues['bcchfunction'])
-  $('#macfiltermode_1').val(propValues['macfiltermode'])
-  $('#interfaceup_1').val(propValues['Interface:Up'])
-  $('#stackup_1').val(propValues['Stack:Up'])
-  $('#network_nodetype_1').val(propValues['Network:NodeType'])
-  $('#network_name_1').val(propValues['Network:Name'])
-  $('#get_numconnecteddevices_1').val(propValues['numconnected'])
-  $('#get_connecteddevices_1').val(propValues['connecteddevices'])
-  $('#get_dodagroute_1').val(propValues['dodagroute'])
-  $('#get_ipv6alladdresses_1').val(propValues['IPv6:AllAddresses'])
-  $('#get_macfilterlist_1').val(propValues['macfilterlist'])
 }
 /*****************************************/
 
