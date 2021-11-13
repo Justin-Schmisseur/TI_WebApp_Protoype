@@ -45,16 +45,6 @@ function setButtonClicked(buttonId) {
 function setProp(property, newValue) {
     fetch(wfanServerPath + '/setProp?property=' + property + '&newValue=' + newValue)
 }
-
-
-// let Stack_up = setInterval(getProp('Stack:up'), 2000)
-
-// async function getProp(property) {
-//   const response = fetch(wfanServerPath + '/getProp?property=' + property)
-//   propValue = await response.json()
-//   return propValue
-// }
-
 async function getProps() {
   const response = await fetch(webserverPath + '/getProps')
   propValues = await response.json()
@@ -65,35 +55,35 @@ function updateProps() {
   fetch(webserverPath + '/updateProps')
 }
 function fillIn() {
-  $('#network_protocolversion').val(propValues['NCP:ProtocolVersion'])
-  $('#ncp_version').val(propValues['NCP:Version'])
-  $('#ncp_interfacetype').val(propValues['NCP:InterfaceType'])
-  $('#ncp_hardwareaddress').val(propValues['NCP:HardwareAddress'])
-  $('#ncp_ccathreshold').val(propValues['NCP:CCAThreshold'])
-  $('#ncp_txpower').val(propValues['NCP:TXPower'])
-  $('#ncp_region').val(propValues['NCP:Region'])
-  $('#ncp_modeid').val(propValues['NCP:ModeID'])
-  $('#unicastchlist').val(propValues['unicastchlist'])
-  $('#broadcastchlist').val(propValues['broadcastchlist'])
-  $('#asynchchlist').val(propValues['asyncchlist'])
-  $('#chspacing').val(propValues['chspacing'])
-  $('#ch0centerfreq').val(propValues['ch0centerfreq'])
-  $('#network_panid').val(propValues['Network:Panid'])
-  $('#bcdwellinterval').val(propValues['bcdwellinterval'])
-  $('#ucdwellinterval').val(propValues['ucdwellinterval'])
-  $('#bcintervall').val(propValues['bcinterval'])
-  $('#ucchfunction').val(propValues['ucchfunction'])
-  $('#bcchfunction').val(propValues['bcchfunction'])
-  $('#macfiltermode').val(propValues['macfiltermode'])
-  $('#interfaceup').val(propValues['Interface:Up'])
-  $('#stackup').val(propValues['Stack:Up'])
-  $('#network_nodetype').val(propValues['Network:NodeType'])
-  $('#network_name').val(propValues['Network:Name'])
-  $('#get_numconnecteddevices').val(propValues['numconnected'])
-  $('#get_connecteddevices').val(propValues['connecteddevices'])
-  $('#get_dodagroute').val(propValues['dodagroute'])
-  $('#get_ipv6alladdresses').val(propValues['IPv6:AllAddresses'])
-  $('#get_macfilterlist').val(propValues['macfilterlist'])
+  $('#network_protocolversion_1').val(propValues['NCP:ProtocolVersion'])
+  $('#ncp_version_1').val(propValues['NCP:Version'])
+  $('#ncp_interfacetype_1').val(propValues['NCP:InterfaceType'])
+  $('#ncp_hardwareaddress_1').val(propValues['NCP:HardwareAddress'])
+  $('#ncp_ccathreshold_1').val(propValues['NCP:CCAThreshold'])
+  $('#ncp_txpower_1').val(propValues['NCP:TXPower'])
+  $('#ncp_region_1').val(propValues['NCP:Region'])
+  $('#ncp_modeid_1').val(propValues['NCP:ModeID'])
+  $('#unicastchlist_1').val(propValues['unicastchlist'])
+  $('#broadcastchlist_1').val(propValues['broadcastchlist'])
+  $('#asynchchlist_1').val(propValues['asyncchlist'])
+  $('#chspacing_1').val(propValues['chspacing'])
+  $('#ch0centerfreq_1').val(propValues['ch0centerfreq'])
+  $('#network_panid_1').val(propValues['Network:Panid'])
+  $('#bcdwellinterval_1').val(propValues['bcdwellinterval'])
+  $('#ucdwellinterval_1').val(propValues['ucdwellinterval'])
+  $('#bcintervall_1').val(propValues['bcinterval'])
+  $('#ucchfunction_1').val(propValues['ucchfunction'])
+  $('#bcchfunction_1').val(propValues['bcchfunction'])
+  $('#macfiltermode_1').val(propValues['macfiltermode'])
+  $('#interfaceup_1').val(propValues['Interface:Up'])
+  $('#stackup_1').val(propValues['Stack:Up'])
+  $('#network_nodetype_1').val(propValues['Network:NodeType'])
+  $('#network_name_1').val(propValues['Network:Name'])
+  $('#get_numconnecteddevices_1').val(propValues['numconnected'])
+  $('#get_connecteddevices_1').val(propValues['connecteddevices'])
+  $('#get_dodagroute_1').val(propValues['dodagroute'])
+  $('#get_ipv6alladdresses_1').val(propValues['IPv6:AllAddresses'])
+  $('#get_macfilterlist_1').val(propValues['macfilterlist'])
 }
 /*****************************************/
 
