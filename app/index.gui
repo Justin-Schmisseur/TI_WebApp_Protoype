@@ -63,6 +63,7 @@
     #cy {
       width: 50%;
       height: 100vh;
+      position: relative;
     }
 
     #viewport {

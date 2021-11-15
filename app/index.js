@@ -97,7 +97,6 @@ function resetMainProps() {
 
 function fillIn() {
   // console.log(noUpdateProps.length);
-
   for (let id in idPropMap) {
     const _id = "#" + id,
       prop = idPropMap[id];
@@ -106,7 +105,46 @@ function fillIn() {
       if (_id == "#ncp_txpower_1") {
         // console.log(propValues[prop]);
       }
-      $(_id).val(propValues[prop]);
+      // Parse hexadecimal values to decimal
+      if (
+        _id == "#unicastchlist_1" ||
+        _id == "#broadcastchlist_1" ||
+        _id == "#asynchchlist_1"
+      ) {
+        chlistArray = propValues[prop].split(":");
+        (chlistDecimalString = ""), (decimalValue = 0);
+        for (let segment in chlistArray) {
+          decimalValue = parseInt(chlistArray[segment], 16);
+          chlistDecimalString += decimalValue.toString() + ":";
+        }
+        chlistDecimalString = chlistDecimalString.slice(0, -1);
+        $(_id).val(chlistDecimalString);
+        // Parse connected devices and number of connected devices
+      } else if (_id == "#get_connecteddevices_1") {
+        devicesArray = propValues[prop].split("\n");
+        connectedDevices = "";
+        for (let index in devicesArray) {
+          if (
+            devicesArray[index] ==
+              "List of connected devices currently in routing table:" ||
+            devicesArray[index] == ""
+          ) {
+            // Do nothing; ignore
+          } else if (
+            devicesArray[index].substring(0, 28) ==
+            "Number of connected devices:"
+          ) {
+            tempSplit = devicesArray[index].split(": ");
+            $("#get_numconnecteddevices_1").val(tempSplit[1]);
+          } else {
+            connectedDevices += devicesArray[index] + "|";
+          }
+        }
+        connectedDevices = connectedDevices.slice(0, -1);
+        $(_id).val(connectedDevices); // If it fails, try $(_id).labels = connectedDevices
+      } else {
+        $(_id).val(propValues[prop]);
+      }
     }
   }
 }
