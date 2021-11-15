@@ -32,7 +32,6 @@
 
 
 
-
 <template id="template_obj" is="dom-bind">
 
 
@@ -62,8 +61,8 @@
     }
 
     #cy {
-      height: 100%;
-      width: 500px;
+      width: 50%;
+      height: 100vh;
     }
 
     #viewport {
@@ -98,8 +97,11 @@
     }
 
     #main_tab {
-      width: 1415px;
-      height: 691px
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
     }
 
     #mainset_container {
@@ -421,6 +423,13 @@
       width: 475px;
     }
 
+    #gw_bringup_label {
+      position: absolute;
+      top: 40vh;
+      left: 0;
+      right: 0;
+    }
+
     #ncp_hardwareaddress {
       width: 219px;
       height: 23px;
@@ -456,47 +465,56 @@
     }
 
     #led_state_green {
-      position: absolute;
-      left: 236px;
-      top: 231px;
+      width: 200px;
+      height: 200px;
     }
 
     #toggle_led_green {
-      width: 231px;
-      position: absolute;
-      left: 4px;
-      top: 231px;
+      width: 200px;
+      height: 200px;
     }
 
     #led_state_red {
-      position: absolute;
-      left: 236px;
-      top: 32px;
-      height: 197px;
+      width: 200px;
+      height: 200px;
     }
 
     #toggle_led_red {
-      width: 231px;
+      width: 200px;
       height: 200px;
       border: solid 1px lightgray;
-      position: absolute;
-      left: 4px;
-      top: 30px;
     }
 
-    #label_3 {
-      position: absolute;
-      left: 3px;
-      top: 3px;
+    #coap_actions_label{
+      
+    }
+    #coap_node_control_container {
+        height : 100vh;
+        width : 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
 
-    #container_2 {
-      height: 31.286em;
-      width: 28.214em;
-      border: 1px solid black;
-      position: absolute;
-      left: 1017px;
-      top: 3px;
+    #coap_node_properties_container {
+        width : 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #coap_node_actions_container {
+        width : 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .led_control_container {
+        display : flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
     }
 
     #get_ipv6alladdresses {
@@ -1882,36 +1900,33 @@
     </ti-widget-menuitem>
   </ti-widget-menubar>
   <ti-widget-container auto-scroll id="viewport" pin class="viewport" horizontal layout>
-    <div id="cy" one flex></div>
   </ti-widget-container>
-  <ti-transport-network id="ti_transport_network" hidden>
-    <ti-model-http id="http_model" hidden url="http://127.0.0.1:8000">
-      <ti-route-http id="ti_route_http_rled" hidden content-type="json" verb="BOTH" path="/rled" name="rled"></ti-route-http>
-      <ti-route-http id="ti_route_http_gled" hidden content-type="json" verb="BOTH" path="/gled" name="gled"></ti-route-http>
-    </ti-model-http>
-  </ti-transport-network>
   <ti-widget-tabcontainer id="tabcontainer" layout selected-index="0">
-    <ti-widget-tab id="main_tab" name="Main">
-      <ti-widget-container id="container_2" auto-scroll>
-        <ti-widget-label id="label_3" label="Actions:" font-size="x-large"></ti-widget-label>
-        <ti-tile-toggleswitch id="toggle_led_red" font-size="medium" toggle-color="#f41010" title-text="Toggle Red Router LED"></ti-tile-toggleswitch>
-        <ti-tile-led id="led_state_red" title-text="Red LED State" font-size="medium" color="#f41010" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
-        <ti-tile-toggleswitch id="toggle_led_green" font-size="medium" toggle-color="#10f43e" title-text="Toggle Green Router LED"></ti-tile-toggleswitch>
-        <ti-tile-led id="led_state_green" title-text="Green LED State" font-size="medium" color="#10f43e" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
-      </ti-widget-container>
-      <ti-widget-dialog id="dialog" heading="Entitled" desc="Toggle the visible-in-designer property to show the dialog in the Designer" with-backdrop>
-        <ti-widget-container id="container_3" layout horizontal center>
-          <ti-widget-label id="label_10" label="Value:"></ti-widget-label>
-          <ti-widget-textbox id="textbox_2" flex one></ti-widget-textbox>
-        </ti-widget-container>
-
-        <ti-widget-container id="container_5" class="actionBar" layout horizontal>
-          <ti-widget-button id="button" label="Cancel" dialog-dismiss></ti-widget-button>
-          <ti-widget-button id="button_1" label="OK" dialog-confirm></ti-widget-button>
-        </ti-widget-container>
-      </ti-widget-dialog>
+    <ti-widget-tab id="main_tab" name="Main" style=''>
+      <div id="cy">
+        <ti-widget-label id="gw_bringup_label" label="Please connect a border router" text-align="center" font-size="xx-large" font-weight="900"></ti-widget-label>
+      </div>
+      <div id="coap_node_control_container" >
+        <div id="coap_node_properties_container" style="margin-top: 20px;">
+          <ti-widget-label style="" label="Properties:" font-size="x-large"></ti-widget-label>
+            <ti-widget-container id="container_4" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_4" class="label" label="IP Address:"></ti-widget-label>
+                <ti-widget-textbox id="ip_address" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+        </div>
+        <div id="coap_node_actions_container" style="margin-top: 20px;">
+            <ti-widget-label id="coap_actions_label" label="Actions:" font-size="x-large"></ti-widget-label>
+          <div class="led_control_container">
+            <ti-tile-toggleswitch id="toggle_led_red" font-size="medium" toggle-color="#f41010" title-text="Toggle Red Router LED"></ti-tile-toggleswitch>
+            <ti-tile-led id="led_state_red" title-text="Red LED State" font-size="medium" color="#f41010" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
+          </div>
+          <div class="led_control_container">
+            <ti-tile-toggleswitch id="toggle_led_green" font-size="medium" toggle-color="#10f43e" title-text="Toggle Green Router LED"></ti-tile-toggleswitch>
+            <ti-tile-led id="led_state_green" title-text="Green LED State" font-size="medium" color="#10f43e" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
+          </div>
+        </div>  
+      </div>  
     </ti-widget-tab>
-
     <ti-widget-tab id="config_tab" name="Config">
       <ti-widget-tilecontainer id="getother_tilecontainer_2" auto-scroll wrap tile-title-background-color="#000000">
         <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="IPV6 Addresses" selected-value="{{tabIndex}}" selected-index="2"></ti-widget-droplist>
