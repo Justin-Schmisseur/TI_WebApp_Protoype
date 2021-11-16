@@ -1,4 +1,4 @@
-const idPropMap = {
+const idMainPropMap = {
   network_protocolversion_1: "NCP:ProtocolVersion",
   ncp_version_1: "NCP:Version",
   ncp_interfacetype_1: "NCP:InterfaceType",
@@ -19,45 +19,54 @@ const idPropMap = {
   ucchfunction_1: "ucchfunction",
   bcchfunction_1: "bcchfunction",
   macfiltermode_1: "macfiltermode",
-  interfaceup_1: "Interface:Up",
-  stackup_1: "Stack:Up",
   network_nodetype_1: "Network:NodeType",
-  network_name_1: "Network:Name",
+  network_name_1: "Network:Name"
+};
+const idStartPropMap = {
+  interfaceup_1: "Interface:Up",
+  stackup_1: "Stack:Up"
+}
+const idOtherPropMap = {
   get_numconnecteddevices_1: "numconnected",
-  // get_connecteddevices_1: "connecteddevices", //TODO BUG FIX throwing errors on every click
+  get_connecteddevices_1: "connecteddevices",
   get_dodagroute_1: "dodagroute",
   get_ipv6alladdresses_1: "IPv6:AllAddresses",
-  get_macfilterlist_1: "macfilterlist",
-};
-
+  get_macfilterlist_1: "macfilterlist"
+}
 function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
 
 const webserverPath = "http://localhost:8000";
 let br_connection_status, propValues;
-
 let noUpdateProps = [];
 
-/********* Filling in Properties *********/
-// // Get properties and fillIn every 2s
-// setInterval(getProps, 2000)
-// // Update properties every 30s
-// setInterval(updateProps, 30000)
-
+/********* Filling in Properties every 15s *********/
 setInterval(function () {
   getProps();
-  updateProps();
-}, 5000);
+}, 1000);
 
+/********** Backend setProp and getProps *************/
+function setProp(property, newValue) {
+  fetch(
+    webserverPath + "/setProp?property=" + property + "&newValue=" + newValue
+  );
+}
+
+async function getProps() {
+  const response = await fetch(webserverPath + "/getProps");
+  propValues = await response.json();
+  fillInMainProps();
+  fillInStartProps()
+}
+
+/************** Main Prop Handling ******************/
 // Handles clicking inside and outside of textboxes
 window.addEventListener("click", function (e) {
-  for (let id in idPropMap) {
-    const _id = "#" + id,
-      prop = idPropMap[id];
-
+  for (let id in idMainPropMap) {
+    const _id = "#" + id, prop = idMainPropMap[id];
     // if clicked on textbox
-    if (document.getElementById(id).contains(e.target)) {
+    if (e.target.parentNode.id == id) {
       // Reset text for user to type into
       $(_id).val("");
       // Add prop to noUpdateProps so it doesn't auto-update while user is typing
@@ -70,8 +79,6 @@ window.addEventListener("click", function (e) {
         $(_id).val(propValues[prop]);
         // Remove item from noUpdateProps so it can update next time
         noUpdateProps = noUpdateProps.filter((item) => item !== prop);
-      } else {
-        // setProp(prop,$(_id).val())
       }
     }
   }
@@ -81,7 +88,7 @@ window.addEventListener("click", function (e) {
 function setMainProps() {
   for (let index in noUpdateProps) {
     const prop = noUpdateProps[index],
-      _id = "#" + getKeyByValue(idPropMap, prop);
+      _id = "#" + getKeyByValue(idMainPropMap, prop);
     // Set the property to the user specified value
     setProp(prop, $(_id).val());
   }
@@ -89,84 +96,43 @@ function setMainProps() {
   noUpdateProps = [];
 }
 
-//When refresh button is pressed, all changed properties are refreshed to old values
-function resetMainProps() {
+//When get button is pressed, all changed properties are refreshed to old values
+function getMainProps() {
   noUpdateProps = [];
-  fillIn();
+  fillInMainProps();
 }
 
-function fillIn() {
-  // console.log(noUpdateProps.length);
-  for (let id in idPropMap) {
-    const _id = "#" + id,
-      prop = idPropMap[id];
+function fillInMainProps() {
+//   console.log(noUpdateProps.length);
+  for (let id in idMainPropMap) {
+    const _id = "#" + id, prop = idMainPropMap[id];
     // If property isn't in noUpdateProps then update it
     if (!noUpdateProps.includes(prop)) {
-      if (_id == "#ncp_txpower_1") {
-        // console.log(propValues[prop]);
-      }
-      // Parse hexadecimal values to decimal
-      if (
-        _id == "#unicastchlist_1" ||
-        _id == "#broadcastchlist_1" ||
-        _id == "#asynchchlist_1"
-      ) {
-        chlistArray = propValues[prop].split(":");
-        (chlistDecimalString = ""), (decimalValue = 0);
-        for (let segment in chlistArray) {
-          decimalValue = parseInt(chlistArray[segment], 16);
-          chlistDecimalString += decimalValue.toString() + ":";
-        }
-        chlistDecimalString = chlistDecimalString.slice(0, -1);
-        $(_id).val(chlistDecimalString);
-        // Parse connected devices and number of connected devices
-      } else if (_id == "#get_connecteddevices_1") {
-        devicesArray = propValues[prop].split("\n");
-        connectedDevices = "";
-        for (let index in devicesArray) {
-          if (
-            devicesArray[index] ==
-              "List of connected devices currently in routing table:" ||
-            devicesArray[index] == ""
-          ) {
-            // Do nothing; ignore
-          } else if (
-            devicesArray[index].substring(0, 28) ==
-            "Number of connected devices:"
-          ) {
-            tempSplit = devicesArray[index].split(": ");
-            $("#get_numconnecteddevices_1").val(tempSplit[1]);
-          } else {
-            connectedDevices += devicesArray[index] + "|";
-          }
-        }
-        connectedDevices = connectedDevices.slice(0, -1);
-        $(_id).val(connectedDevices); // If it fails, try $(_id).labels = connectedDevices
-      } else {
         $(_id).val(propValues[prop]);
-      }
     }
   }
 }
 
-function setProp(property, newValue) {
-  fetch(
-    webserverPath + "/setProp?property=" + property + "&newValue=" + newValue
-  );
+
+
+/********* Start Prop Handling ***********/
+function fillInStartProps() {
+    for (let id in idStartPropMap) {
+        // Turn lights for interface:up and stack:up on or off depending on their states
+        const _id = "#" + id, prop = idStartPropMap[id];
+        $(_id).prop('on', propValues[prop] == 'true')
+    }
 }
 
-async function getProps() {
-  const response = await fetch(webserverPath + "/getProps");
-  propValues = await response.json();
-  // console.log(propValues);
-  fillIn();
+// Used for set and reset buttons
+function setStartProps(onOrOff) {
+    for (let id in idStartPropMap) {
+        prop = idStartPropMap[id];
+        setProp(prop, onOrOff)
+    }
 }
 
-function updateProps() {
-  fetch(webserverPath + "/updateProps");
-}
-/*****************************************/
-//******* Cytoscape stuff ************
+/******* Cytoscape stuff ************/
 var cy;
 
 function update_coap_node_panel_by_node(node) {}
