@@ -27,6 +27,7 @@
 <link rel="import" href="components/ti-widget-common/ti-widget-toggle-button.html">
 <link rel="import" href="components/ti-widget-common/ti-widget-radio-group.html">
 <link rel="import" href="components/ti-widget-common/ti-widget-radio-button.html">
+<link rel="import" href="components/ti-widget-common/ti-widget-led.html">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -406,10 +407,6 @@
       top: 7px;
     }
 
-    #container_12 {
-      width: 475px;
-    }
-
     #network_name {
       width: 219px;
       height: 23px;
@@ -628,10 +625,6 @@
       position: absolute;
     }
 
-    #container_33 {
-      width: 475px;
-    }
-
     #broadcastchlist {
       width: 219px;
       height: 23px;
@@ -644,10 +637,6 @@
       width: 157px;
     }
 
-    #container_34 {
-      width: 475px;
-    }
-
     #asynchchlist {
       width: 219px;
       height: 23px;
@@ -658,10 +647,6 @@
 
     #label_36 {
       width: 157px;
-    }
-
-    #container_36 {
-      width: 475px;
     }
 
     #get_networkprotocalversion_button {
@@ -1322,11 +1307,11 @@
     }
 
     #label_65 {
-      width: 154px;
+      width: 164px;
     }
 
     #container_48 {
-      width: 475px;
+      width: 402px;
     }
 
     #get_ucdwellinterval_button_1 {
@@ -1807,22 +1792,6 @@
       width: 475px;
     }
 
-    #label_75 {
-      width: 161px;
-    }
-
-    #container_57 {
-      width: 475px;
-    }
-
-    #label_76 {
-      width: 162px;
-    }
-
-    #container_58 {
-      width: 475px;
-    }
-
     #container_59 {
       width: 373px;
       position: absolute;
@@ -1888,14 +1857,48 @@
       top: 6px;
       height: 631px;
     }
+      #container_73 {
+          width: 475px;
+          height: 47px;
+      }
+      #label_88 {
+          width: 94px;
+      }
+      #container_72 {
+          width: 163px;
+      }
+      #label_87 {
+          width: 96px;
+      }
+      #container_71 {
+          width: 166px;
+      }
+      #mainget_container_3 {
+          padding: 20px 10px 20px 10px;
+          position: absolute;
+          left: 929px;
+          top: 9px;
+          background-color: #ffffff;
+          height: 302px;
+          width: 348px;
+      }
+      #container_74 {
+          width: 231px;
+          height: 77px;
+      }
+      #led {
+          width:41px;
+          height:37px}
+      #led_1 {
+          width:42px;
+          height:38px}
   </style>
 
 
 
  <!-- <ti-widget-readme id="readmeViewer" pin></ti-widget-readme> -->
   <ti-core-stylesheets id="ti_core_stylesheets"></ti-core-stylesheets>
-  <ti-widget-container auto-scroll id="viewport" pin class="viewport" horizontal layout>
-  </ti-widget-container>
+  <ti-widget-container auto-scroll id="viewport" pin class="viewport" horizontal layout></ti-widget-container>
   <ti-widget-tabcontainer id="tabcontainer" layout selected-index="0">
     <ti-widget-tab id="main_tab" name="Main" style=''>
       <div id="cy">
@@ -1923,146 +1926,156 @@
       </div>  
     </ti-widget-tab>
     <ti-widget-tab id="config_tab" name="Config">
-      <ti-widget-tilecontainer id="getother_tilecontainer_2" auto-scroll wrap tile-title-background-color="#000000">
-        <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="IPV6 Addresses" selected-value="{{tabIndex}}" selected-index="2"></ti-widget-droplist>
-        <ti-widget-tabcontainer id="macfilterlist_tab_2" selected-index="{{tabIndex}}" layout hide-tab-labels>
-          <ti-widget-tab id="connectedevices_tab_1">
-            <ti-widget-container id="container_61" auto-scroll class="row" horizontal layout center>
-              <ti-widget-listbox id="listbox_1" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+        <ti-widget-container id="mainget_container_2" vertical layout one flex auto-scroll>
+        </ti-widget-container>
+        <ti-widget-tilecontainer id="getother_tilecontainer_2" auto-scroll wrap tile-title-background-color="#000000">
+            <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="Dodag Route" selected-value="{{tabIndex}}" selected-index="1"></ti-widget-droplist>
+            <ti-widget-tabcontainer id="macfilterlist_tab_2" selected-index="{{tabIndex}}" layout hide-tab-labels>
+                <ti-widget-tab id="connectedevices_tab_1">
+                    <ti-widget-container id="container_61" auto-scroll class="row" horizontal layout center>
+                        <ti-widget-listbox id="listbox_1" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" values="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
+                    </ti-widget-container>
+                    <ti-widget-label id="connecteddevices_label_1" label="Connected Devices:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                    <ti-widget-textbox id="get_numconnecteddevices_1" value="20" font-weight="bold" disabled></ti-widget-textbox>
+                </ti-widget-tab>
+                <ti-widget-tab id="dodagroute_tab_1">
+                    <ti-widget-container id="ti_widget_containercontainer_47" auto-scroll class="row" horizontal layout center>
+                        <ti-widget-label id="label_73" class="label" label="DodagRouteDest:" font-size="x-large"></ti-widget-label>
+                        <ti-widget-input id="dodagroutedest_input_1" label="DodagRouteDest"></ti-widget-input>
+                        <ti-widget-button id="set_dodagroutedest_button_1" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+                    </ti-widget-container>
+                    <ti-widget-container id="container_59" auto-scroll class="row" horizontal layout center>
+                        <ti-widget-listbox id="listbox" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                    </ti-widget-container>
+                    <ti-widget-label id="dodagroute_label_1" label="Dodag Route:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                </ti-widget-tab>
+                <ti-widget-tab id="ipv6alladdresses_tab_1">
+                    <ti-widget-container id="container_62" auto-scroll class="row" horizontal layout center>
+                        <ti-widget-listbox id="listbox_2" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                    </ti-widget-container>
+                    <ti-widget-label id="ipv6alladdresses_label_1" label="IPV6 Addresses:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                </ti-widget-tab>
+                <ti-widget-tab id="macfilterlist_tab_3">
+                    <ti-widget-container id="container_63" auto-scroll class="row" horizontal layout center>
+                        <ti-widget-listbox id="listbox_3" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                    </ti-widget-container>
+                    <ti-widget-label id="macfilterlist_label_3" label="MacFilterList:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
+                </ti-widget-tab>
+            </ti-widget-tabcontainer>
+        </ti-widget-tilecontainer>
+        <ti-widget-container id="mainget_container_1" vertical layout one flex auto-scroll>
+            <ti-widget-label id="label_7" label="Properties:" font-size="x-large"></ti-widget-label>
+            <ti-widget-container id="container_31" auto-scroll class="row" horizontal layout center>
+                <ti-widget-textbox id="network_protocolversion_1" one flex disabled class="value"></ti-widget-textbox>
+                <ti-widget-label id="label_51" class="label" label="Network:ProtocalVersion:"></ti-widget-label>
             </ti-widget-container>
-            <ti-widget-label id="connecteddevices_label_1" label="Connected Devices:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
-            <ti-widget-textbox id="get_numconnecteddevices_1" value="20" disabled></ti-widget-textbox>
-          </ti-widget-tab>
-          <ti-widget-tab id="dodagroute_tab_1">
-            <ti-widget-container id="ti_widget_containercontainer_47" auto-scroll class="row" horizontal layout center>
-              <ti-widget-label id="label_73" class="label" label="DodagRouteDest:" font-size="x-large"></ti-widget-label>
-              <ti-widget-input id="dodagroutedest_input_1" label="DodagRouteDest"></ti-widget-input>
-              <ti-widget-button id="set_dodagroutedest_button_1" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
+            <ti-widget-container id="container_32" auto-scroll class="row" horizontal layout center>
+                <ti-widget-textbox id="ncp_version_1" one flex disabled class="value"></ti-widget-textbox>
+                <ti-widget-label id="label_52" class="label" label="NCP:Version:"></ti-widget-label>
             </ti-widget-container>
-            <ti-widget-container id="container_59" auto-scroll class="row" horizontal layout center>
-              <ti-widget-listbox id="listbox" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+            <ti-widget-container id="container_9" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_8" class="label" label="NCP:InterfaceType:"></ti-widget-label>
+                <ti-widget-textbox id="ncp_interfacetype_1" one flex disabled class="value"></ti-widget-textbox>
             </ti-widget-container>
-            <ti-widget-label id="dodagroute_label_1" label="Dodag Route:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
-          </ti-widget-tab>
-          <ti-widget-tab id="ipv6alladdresses_tab_1">
-            <ti-widget-container id="container_62" auto-scroll class="row" horizontal layout center>
-              <ti-widget-listbox id="listbox_2" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+            <ti-widget-container id="container_10" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_9" class="label" label="NCP:HardwareAddress:"></ti-widget-label>
+                <ti-widget-textbox id="ncp_hardwareaddress_1" one flex disabled class="value"></ti-widget-textbox>
             </ti-widget-container>
-            <ti-widget-label id="ipv6alladdresses_label_1" label="IPV6 Addresses:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
-          </ti-widget-tab>
-          <ti-widget-tab id="macfilterlist_tab_3">
-            <ti-widget-container id="container_63" auto-scroll class="row" horizontal layout center>
-              <ti-widget-listbox id="listbox_3" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+            <ti-widget-container id="container_35" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_53" class="label" label="NCP:CCAThreshold:"></ti-widget-label>
+                <ti-widget-textbox id="ncp_ccathreshold_1" one flex class="value" value="10"></ti-widget-textbox>
             </ti-widget-container>
-            <ti-widget-label id="macfilterlist_label_3" label="MacFilterList:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
-          </ti-widget-tab>
-        </ti-widget-tabcontainer>
-      </ti-widget-tilecontainer>
-      <ti-widget-container id="mainget_container_1" vertical layout one flex auto-scroll>
-        <ti-widget-label id="label_7" label="Properties:" font-size="x-large"></ti-widget-label>
-        <ti-widget-container id="container_31" auto-scroll class="row" horizontal layout center>
-          <ti-widget-textbox id="network_protocolversion_1" one flex disabled class="value"></ti-widget-textbox>
-          <ti-widget-label id="label_51" class="label" label="Network:ProtocalVersion:"></ti-widget-label>
+            <ti-widget-container id="container_37" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_54" class="label" label="NCP:TXPower:"></ti-widget-label>
+                <ti-widget-textbox id="ncp_txpower_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_38" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_55" class="label" label="NCP:Region:"></ti-widget-label>
+                <ti-widget-textbox id="ncp_region_1" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_39" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_56" class="label" label="NCP:ModeID:"></ti-widget-label>
+                <ti-widget-textbox id="ncp_modeid_1" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_40" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_57" class="label" label="UnicastCHList:"></ti-widget-label>
+                <ti-widget-textbox id="unicastchlist_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_41" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_58" class="label" label="BroadcastCHList:"></ti-widget-label>
+                <ti-widget-textbox id="broadcastchlist_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_42" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_59" class="label" label="AsynchCHList:"></ti-widget-label>
+                <ti-widget-textbox id="asynchchlist_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_43" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_60" class="label" label="CHSpacing:"></ti-widget-label>
+                <ti-widget-textbox id="chspacing_1" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_44" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_61" class="label" label="CH0CenterFreq:"></ti-widget-label>
+                <ti-widget-textbox id="ch0centerfreq_1" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_45" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_62" class="label" label="Network:Panid:"></ti-widget-label>
+                <ti-widget-textbox id="network_panid_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_46" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_63" class="label" label="BCDWellInterval:"></ti-widget-label>
+                <ti-widget-textbox id="bcdwellinterval_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_47" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_64" class="label" label="UCDWellInterval:"></ti-widget-label>
+                <ti-widget-textbox id="ucdwellinterval_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_48" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_65" class="label" label="BCInterval:"></ti-widget-label>
+                <ti-widget-textbox id="bcinterval_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_49" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_66" class="label" label="UCCHFunction:"></ti-widget-label>
+                <ti-widget-textbox id="ucchfunction_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_50" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_67" class="label" label="BCCHFunction:"></ti-widget-label>
+                <ti-widget-textbox id="bcchfunction_1" one flex class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_54" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_71" class="label" label="Network:NodeType:"></ti-widget-label>
+                <ti-widget-textbox id="network_nodetype_1" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_55" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_72" class="label" label="Network:Name:"></ti-widget-label>
+                <ti-widget-textbox id="network_name_1" one flex disabled class="value"></ti-widget-textbox>
+            </ti-widget-container>
+            <ti-widget-container id="container_56" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_74" class="label" label="MacFilterMode:"></ti-widget-label>
+                <ti-widget-droplist id="droplist" labels="0|1|2" selected-text="0" selected-value="1" selected-index="0"></ti-widget-droplist>
+            </ti-widget-container>
         </ti-widget-container>
-        <ti-widget-container id="container_32" auto-scroll class="row" horizontal layout center>
-          <ti-widget-textbox id="ncp_version_1" one flex disabled class="value"></ti-widget-textbox>
-          <ti-widget-label id="label_52" class="label" label="NCP:Version:"></ti-widget-label>
+        <ti-widget-container id="mainget_container_3" vertical layout one flex auto-scroll>
+            <ti-widget-label id="label_10" label="Properties:" font-size="x-large"></ti-widget-label>
+            <ti-widget-container id="container_71" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_87" class="label" label="Interface:Up:"></ti-widget-label>
+                <ti-widget-led id="led" glow></ti-widget-led>
+            </ti-widget-container>
+            <ti-widget-container id="container_72" auto-scroll class="row" horizontal layout center>
+                <ti-widget-label id="label_88" class="label" label="Stack:Up:"></ti-widget-label>
+                <ti-widget-led id="led_1" glow></ti-widget-led>
+            </ti-widget-container>
+            <ti-widget-container id="container_73" auto-scroll class="row" horizontal layout center>
+            </ti-widget-container>
+            <ti-widget-container id="container_74" auto-scroll class="row" horizontal layout center>
+            <ti-widget-button id="start" label="start" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
+            <ti-widget-button id="reset" label="reset" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
+            </ti-widget-container>
         </ti-widget-container>
-        <ti-widget-container id="container_9" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_8" class="label" label="NCP:InterfaceType:"></ti-widget-label>
-          <ti-widget-textbox id="ncp_interfacetype_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_10" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_9" class="label" label="NCP:HardwareAddress:"></ti-widget-label>
-          <ti-widget-textbox id="ncp_hardwareaddress_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_35" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_53" class="label" label="NCP:CCAThreshold:"></ti-widget-label>
-          <ti-widget-textbox id="ncp_ccathreshold_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_37" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_54" class="label" label="NCP:TXPower:"></ti-widget-label>
-          <ti-widget-textbox id="ncp_txpower_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_38" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_55" class="label" label="NCP:Region:"></ti-widget-label>
-          <ti-widget-textbox id="ncp_region_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_39" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_56" class="label" label="NCP:ModeID:"></ti-widget-label>
-          <ti-widget-textbox id="ncp_modeid_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_40" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_57" class="label" label="UnicastCHList:"></ti-widget-label>
-          <ti-widget-textbox id="unicastchlist_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_41" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_58" class="label" label="BroadcastCHList:"></ti-widget-label>
-          <ti-widget-textbox id="broadcastchlist_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_42" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_59" class="label" label="AsynchCHList:"></ti-widget-label>
-          <ti-widget-textbox id="asynchchlist_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_43" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_60" class="label" label="CHSpacing:"></ti-widget-label>
-          <ti-widget-textbox id="chspacing_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_44" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_61" class="label" label="CH0CenterFreq:"></ti-widget-label>
-          <ti-widget-textbox id="ch0centerfreq_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_45" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_62" class="label" label="Network:Panid:"></ti-widget-label>
-          <ti-widget-textbox id="network_panid_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_46" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_63" class="label" label="BCDWellInterval:"></ti-widget-label>
-          <ti-widget-textbox id="bcdwellinterval_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_47" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_64" class="label" label="UCDWellInterval:"></ti-widget-label>
-          <ti-widget-textbox id="ucdwellinterval_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_48" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_65" class="label" label="BCInterval:"></ti-widget-label>
-          <ti-widget-textbox id="bcintervall_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_49" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_66" class="label" label="UCCHFunction:"></ti-widget-label>
-          <ti-widget-textbox id="ucchfunction_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_50" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_67" class="label" label="BCCHFunction:"></ti-widget-label>
-          <ti-widget-textbox id="bcchfunction_1" one flex class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_54" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_71" class="label" label="Network:NodeType:"></ti-widget-label>
-          <ti-widget-textbox id="network_nodetype_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_55" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_72" class="label" label="Network:Name:"></ti-widget-label>
-          <ti-widget-textbox id="network_name_1" one flex disabled class="value"></ti-widget-textbox>
-        </ti-widget-container>
-        <ti-widget-container id="container_56" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_74" class="label" label="MacFilterMode:"></ti-widget-label>
-          <ti-widget-toggle-button id="macfiltermode_1" toggle-color="#fa0000"></ti-widget-toggle-button>
-        </ti-widget-container>
-        <ti-widget-container id="container_57" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_75" class="label" label="Interface:Up:"></ti-widget-label>
-          <ti-widget-toggle-button id="interfaceup_1" toggle-color="#ff0000"></ti-widget-toggle-button>
-        </ti-widget-container>
-        <ti-widget-container id="container_58" auto-scroll class="row" horizontal layout center>
-          <ti-widget-label id="label_76" class="label" label="Stack:Up:"></ti-widget-label>
-          <ti-widget-toggle-button id="stackup_1" toggle-color="#ff0000"></ti-widget-toggle-button>
-        </ti-widget-container>
-      </ti-widget-container>
-      <ti-widget-container id="container_60" auto-scroll class="row" horizontal layout center>
-        <ti-widget-button id="save" onClick="setMainProps()" label="Save" button-type="primary" raised></ti-widget-button>
-        <ti-widget-button id="refresh" onClick="resetMainProps()" label="Reset" button-type="secondary" raised></ti-widget-button>
-      </ti-widget-container>
-      <ti-widget-radio-group id="group" selected-text="Small">
-      </ti-widget-radio-group>
+        <ti-widget-container id="container_60" auto-scroll class="row" horizontal layout center>
+            <ti-widget-button id="set" label="set" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
+            <ti-widget-button id="get" label="get" button-type="secondary" raised bindable-trigger="4"></ti-widget-button></ti-widget-container>
+        <ti-widget-radio-group id="group" selected-text="Small">
+        </ti-widget-radio-group>
     </ti-widget-tab>
 
     <ti-widget-tab id="ping_tab" name="Ping">
