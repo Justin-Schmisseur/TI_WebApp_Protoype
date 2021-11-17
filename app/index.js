@@ -58,6 +58,7 @@ async function getProps() {
   propValues = await response.json();
   fillInMainProps();
   fillInStartProps()
+  fillInOtherProps()
 }
 
 /************** Main Prop Handling ******************/
@@ -113,8 +114,6 @@ function fillInMainProps() {
   }
 }
 
-
-
 /********* Start Prop Handling ***********/
 function fillInStartProps() {
     for (let id in idStartPropMap) {
@@ -131,6 +130,25 @@ function setStartProps(onOrOff) {
         setProp(prop, onOrOff)
     }
 }
+
+/************ Other Prop Handling ************/
+function fillInOtherProps() {
+  for (let id in idOtherPropMap) {
+    const _id = "#" + id, prop = idOtherPropMap[id];
+    // If property isn't in noUpdateProps then update it
+    if (prop == "numconnected") {
+        $(_id).val(propValues[prop]);
+    } else {
+        const propArray = propValues[prop]
+        let labelString = ''
+        for (let item in propArray) {
+            labelString += propArray[item] + '|'
+        }
+        $(_id).prop('labels', labelString)
+    }
+  }
+}
+
 
 /******* Cytoscape stuff ************/
 var cy;

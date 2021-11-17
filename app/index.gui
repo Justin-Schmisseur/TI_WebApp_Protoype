@@ -1800,7 +1800,7 @@
       height: 507px;
     }
 
-    #listbox {
+    #get_dodagroute_1 {
       width: 352px;
       height: 474px;
     }
@@ -1819,7 +1819,7 @@
       height: 61px;
     }
 
-    #listbox_1 {
+    #get_connecteddevices_1 {
       width: 353px;
       height: 583px;
     }
@@ -1832,7 +1832,7 @@
       height: 620px;
     }
 
-    #listbox_2 {
+    #get_ipv6alladdresses_1 {
       width: 353px;
       height: 581px;
     }
@@ -1845,7 +1845,7 @@
       height: 631px;
     }
 
-    #listbox_3 {
+    #get_macfilterlist_1 {
       width: 353px;
       height: 582px;
     }
@@ -1939,14 +1939,14 @@
         <ti-widget-container id="mainget_container_2" vertical layout one flex auto-scroll>
         </ti-widget-container>
         <ti-widget-tilecontainer id="getother_tilecontainer_2" auto-scroll wrap tile-title-background-color="#000000">
-            <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="Dodag Route" selected-value="{{tabIndex}}" selected-index="1"></ti-widget-droplist>
+            <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="Mac Filter List" selected-value="{{tabIndex}}" selected-index="3"></ti-widget-droplist>
             <ti-widget-tabcontainer id="macfilterlist_tab_2" selected-index="{{tabIndex}}" layout hide-tab-labels>
                 <ti-widget-tab id="connectedevices_tab_1">
                     <ti-widget-container id="container_61" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox_1" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" values="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_connecteddevices_1" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" values="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="connecteddevices_label_1" label="Connected Devices:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
-                    <ti-widget-textbox id="get_numconnecteddevices_1" value="20" font-weight="bold" disabled></ti-widget-textbox>
+                    <ti-widget-textbox id="get_numconnecteddevices_1" value="0" font-weight="bold" disabled></ti-widget-textbox>
                 </ti-widget-tab>
                 <ti-widget-tab id="dodagroute_tab_1">
                     <ti-widget-container id="ti_widget_containercontainer_47" auto-scroll class="row" horizontal layout center>
@@ -1955,19 +1955,19 @@
                         <ti-widget-button id="set_dodagroutedest_button_1" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
                     </ti-widget-container>
                     <ti-widget-container id="container_59" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_dodagroute_1" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="dodagroute_label_1" label="Dodag Route:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                 </ti-widget-tab>
                 <ti-widget-tab id="ipv6alladdresses_tab_1">
                     <ti-widget-container id="container_62" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox_2" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_ipv6alladdresses_1" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="ipv6alladdresses_label_1" label="IPV6 Addresses:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                 </ti-widget-tab>
                 <ti-widget-tab id="macfilterlist_tab_3">
                     <ti-widget-container id="container_63" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox_3" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_macfilterlist_1" selected-text="label 1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="label 1|label 2"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="macfilterlist_label_3" label="MacFilterList:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                 </ti-widget-tab>
