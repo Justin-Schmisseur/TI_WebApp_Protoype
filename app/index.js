@@ -248,8 +248,8 @@ const initCytoscape = async () => {
         br_connection_status = await response.json();
         //console.log(br_connection_status)
         if (br_connection_status) {
-            document.getElementById("gw_bringup_label").visible = false;
-            document.getElementById("gw_bringup_label").lable = ""
+            document.getElementById("gw_bringup_label_1").style.visibility = "hidden"
+            document.getElementById("gw_bringup_label_1").label = ""
             document.getElementById("mainget_container_1").visible = true
 
             document.getElementById("container_60").visible = true
@@ -257,7 +257,7 @@ const initCytoscape = async () => {
             document.getElementById("getother_tilecontainer_2").style.visibility = "visible"
             document.getElementById("mainget_container_3").visible = true
             document.getElementById("main_tab").disabled = false
-            document.getElementById("ping_tab").disabled = true
+            document.getElementById("ping_tab").disabled = false
             updateProps_index = setInterval(function () {
 
                 getProps();
@@ -265,9 +265,8 @@ const initCytoscape = async () => {
 
             }, 5000);
         } else {
-            document.getElementById("gw_bringup_label").visible = true
-            document.getElementById("gw_bringup_label").label ="Please connect a border router";
-            
+            document.getElementById("gw_bringup_label_1").style.visibility = "visible"
+            document.getElementById("gw_bringup_label_1").label = "Please connect a Border Router"
             document.getElementById("mainget_container_1").visible = false
 
             document.getElementById("container_60").visible = false
@@ -277,6 +276,8 @@ const initCytoscape = async () => {
             document.getElementById("mainget_container_3").visible = false
             document.getElementById("main_tab").disabled = true
             document.getElementById("ping_tab").disabled = true
+            
+            //$("#tabcontainer").prop('index','1')
             clearInterval(updateProps_index)
         }
     }
