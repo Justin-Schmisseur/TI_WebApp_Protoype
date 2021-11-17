@@ -276,12 +276,14 @@ const initCytoscape = async () => {
             document.getElementById("mainget_container_3").visible = false
             document.getElementById("main_tab").disabled = true
             document.getElementById("ping_tab").disabled = true
+            document.getElementById("tabcontainer").selectedIndex = 1
             
-            //$("#tabcontainer").prop('index','1')
+            
             clearInterval(updateProps_index)
         }
     }
-
+    
+    
     async function update_topology() {
         //if these arn't together the "connect br " label appears before topology updates
         await updateCytoscape();
