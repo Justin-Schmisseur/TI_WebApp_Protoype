@@ -15,7 +15,7 @@ const idMainPropMap = {
   network_panid_1: "Network:Panid",
   bcdwellinterval_1: "bcdwellinterval",
   ucdwellinterval_1: "ucdwellinterval",
-  bcintervall_1: "bcinterval",
+  bcinterval_1: "bcinterval",
   ucchfunction_1: "ucchfunction",
   bcchfunction_1: "bcchfunction",
   macfiltermode_1: "macfiltermode",
@@ -33,6 +33,17 @@ const idOtherPropMap = {
   get_ipv6alladdresses_1: "IPv6:AllAddresses",
   get_macfilterlist_1: "macfilterlist"
 }
+const disabledStackUp = {
+  ncp_ccathreshold_1: "NCP:CCAThreshold",
+  ncp_txpower_1: "NCP:TXPower",
+  network_panid_1: "Network:Panid",
+  bcdwellinterval_1: "bcdwellinterval",
+  ucdwellinterval_1: "ucdwellinterval",
+  bcinterval_1: "bcinterval",
+  ucchfunction_1: "ucchfunction",
+  bcchfunction_1: "bcchfunction"
+}
+
 function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
@@ -119,7 +130,11 @@ function fillInStartProps() {
     for (let id in idStartPropMap) {
         // Turn lights for interface:up and stack:up on or off depending on their states
         const _id = "#" + id, prop = idStartPropMap[id];
-        $(_id).prop('on', propValues[prop])
+        const value = propValues[prop]
+        $(_id).prop('on', value || (value=='true'))
+        if(prop == 'Stack:Up') {
+            stackUpProps(value || value=='true')
+        }
     }
 }
 
@@ -147,6 +162,14 @@ function fillInOtherProps() {
         $(_id).prop('labels', labelString)
     }
   }
+}
+
+/********** Disabling when stack:up *************/
+function stackUpProps(disable) {
+    for (let id in disabledStackUp) {
+        const _id = "#" + id, prop = idOtherPropMap[id];
+        $(_id).prop('disabled',disable)
+    }
 }
 
 
