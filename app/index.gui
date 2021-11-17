@@ -1943,7 +1943,7 @@
             <ti-widget-tabcontainer id="macfilterlist_tab_2" selected-index="{{tabIndex}}" layout hide-tab-labels>
                 <ti-widget-tab id="connectedevices_tab_1">
                     <ti-widget-container id="container_61" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="get_connecteddevices_1" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" values="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_connecteddevices_1" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="connecteddevices_label_1" label="Connected Devices:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                     <ti-widget-textbox id="get_numconnecteddevices_1" value="0" font-weight="bold" disabled></ti-widget-textbox>
@@ -2081,8 +2081,8 @@
             <ti-widget-container id="container_73" auto-scroll class="row" horizontal layout center>
             </ti-widget-container>
             <ti-widget-container id="container_74" auto-scroll class="row" horizontal layout center>
-            <ti-widget-button id="start" onClick="setStartProps('true')" label="start" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
-            <ti-widget-button id="reset" onClick="setStartProps('false')" label="reset" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
+            <ti-widget-button id="start" onClick="setStartProps(true)" label="start" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
+            <ti-widget-button id="reset" onClick="setStartProps(false)" label="reset" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
             </ti-widget-container>
         </ti-widget-container>
         <ti-widget-container id="container_60" auto-scroll class="row" horizontal layout center></ti-widget-container>
