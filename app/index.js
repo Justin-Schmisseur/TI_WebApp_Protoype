@@ -119,7 +119,7 @@ function fillInStartProps() {
     for (let id in idStartPropMap) {
         // Turn lights for interface:up and stack:up on or off depending on their states
         const _id = "#" + id, prop = idStartPropMap[id];
-        $(_id).prop('on', propValues[prop] == 'true')
+        $(_id).prop('on', propValues[prop])
     }
 }
 
