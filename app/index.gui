@@ -1902,6 +1902,13 @@
           width: 387px;
           height: 63px;
       }
+      #gw_bringup_label_1 {
+          position: absolute;
+          top: 346px;
+          left: 25px;
+          right: 0;
+          visibility: visible;
+      }
   </style>
 
 
@@ -1909,10 +1916,9 @@
  <!-- <ti-widget-readme id="readmeViewer" pin></ti-widget-readme> -->
   <ti-core-stylesheets id="ti_core_stylesheets"></ti-core-stylesheets>
   <ti-widget-container auto-scroll id="viewport" pin class="viewport" horizontal layout></ti-widget-container>
-  <ti-widget-tabcontainer id="tabcontainer" layout selected-index="0">
+  <ti-widget-tabcontainer id="tabcontainer" layout selected-index="1">
     <ti-widget-tab id="main_tab" name="Main" style=''>
       <div id="cy">
-        <ti-widget-label id="gw_bringup_label" label="Please connect a border router" text-align="center" font-size="xx-large" font-weight="900"></ti-widget-label>
       </div>
       <div id="coap_node_control_container" >
         <div id="coap_node_properties_container" style="margin-top: 20px;">
@@ -1973,6 +1979,7 @@
                 </ti-widget-tab>
             </ti-widget-tabcontainer>
         </ti-widget-tilecontainer>
+        <ti-widget-label id="gw_bringup_label_1" label="Please connect a border router" text-align="center" font-size="xx-large" font-weight="900"></ti-widget-label>
         <ti-widget-container id="mainget_container_1" vertical layout one flex auto-scroll>
             <ti-widget-label id="label_7" label="Properties:" font-size="x-large"></ti-widget-label>
             <ti-widget-container id="container_31" auto-scroll class="row" horizontal layout center>
@@ -2068,15 +2075,15 @@
                 <ti-widget-button id="get" onClick="getMainProps()" label="get" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
             </ti-widget-container>
         </ti-widget-container>
-        <ti-widget-container id="mainget_container_3" vertical layout one flex auto-scroll>
+        <ti-widget-container id="mainget_container_3" vertical layout one flex auto-scroll nonvisible>
             <ti-widget-label id="label_10" label="Properties:" font-size="x-large"></ti-widget-label>
             <ti-widget-container id="container_71" auto-scroll class="row" horizontal layout center>
                 <ti-widget-label id="label_87" class="label" label="Interface:Up:"></ti-widget-label>
-                <ti-widget-led id="interfaceup_1" on="false" color="#00ff00" off-color="#ff0000"></ti-widget-led>
+                <ti-widget-led id="interfaceup_1" color="#00ff00" off-color="#ff0000"></ti-widget-led>
             </ti-widget-container>
             <ti-widget-container id="container_72" auto-scroll class="row" horizontal layout center>
                 <ti-widget-label id="label_88" class="label" label="Stack:Up:"></ti-widget-label>
-                <ti-widget-led id="stackup_1" on="false" color="#00ff00" off-color="#ff0000"></ti-widget-led>
+                <ti-widget-led id="stackup_1" color="#00ff00" off-color="#ff0000"></ti-widget-led>
             </ti-widget-container>
             <ti-widget-container id="container_73" auto-scroll class="row" horizontal layout center>
             </ti-widget-container>
@@ -2090,7 +2097,7 @@
         </ti-widget-radio-group>
     </ti-widget-tab>
 
-    <ti-widget-tab id="ping_tab" name="Ping">
+    <ti-widget-tab id="ping_tab" name="Ping" disabled visible>
       <iframe id="ping_iframe" src="app/ping/index.html" style="width:100%; height:100vh;"></iframe>
     </ti-widget-tab>
 

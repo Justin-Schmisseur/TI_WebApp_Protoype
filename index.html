@@ -552,7 +552,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 
     #coap_actions_label{
-      
+
     }
     #coap_node_control_container {
         height : 100vh;
@@ -1364,7 +1364,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       height: 27px;
     }
 
-    #bcintervall_1 {
+    #bcinterval_1 {
       width: 219px;
       height: 23px;
       top: 7px;
@@ -1740,8 +1740,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       left: 407px;
       top: 9px;
       background-color: #ffffff;
-      height: 685px;
-      width: 513px;
+      height: 974px;
+      width: 520px;
     }
 
     #macfilterlist_label_3 {
@@ -1866,7 +1866,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       height: 507px;
     }
 
-    #listbox {
+    #get_dodagroute_1 {
       width: 352px;
       height: 474px;
     }
@@ -1885,7 +1885,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       height: 61px;
     }
 
-    #listbox_1 {
+    #get_connecteddevices_1 {
       width: 353px;
       height: 583px;
     }
@@ -1898,7 +1898,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       height: 620px;
     }
 
-    #listbox_2 {
+    #get_ipv6alladdresses_1 {
       width: 353px;
       height: 581px;
     }
@@ -1911,7 +1911,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       height: 631px;
     }
 
-    #listbox_3 {
+    #get_macfilterlist_1 {
       width: 353px;
       height: 582px;
     }
@@ -1942,22 +1942,39 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       #mainget_container_3 {
           padding: 20px 10px 20px 10px;
           position: absolute;
-          left: 929px;
-          top: 9px;
+          left: 927px;
+          top: 14px;
           background-color: #ffffff;
-          height: 302px;
-          width: 348px;
+          height: 349px;
+          width: 556px;
       }
       #container_74 {
           width: 231px;
           height: 77px;
       }
-      #led {
+      #interfaceup_1 {
           width:41px;
           height:37px}
-      #led_1 {
+      #stackup_1 {
           width:42px;
           height:38px}
+      #set {
+          width: 41px
+      }
+      #get {
+          width: 69px
+      }
+      #container_75 {
+          width: 387px;
+          height: 63px;
+      }
+      #gw_bringup_label_1 {
+          position: absolute;
+          top: 346px;
+          left: 25px;
+          right: 0;
+          visibility: visible;
+      }
   </style>
 
 
@@ -1965,10 +1982,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  <!-- <ti-widget-readme id="readmeViewer" pin></ti-widget-readme> -->
   <ti-core-stylesheets id="ti_core_stylesheets"></ti-core-stylesheets>
   <ti-widget-container auto-scroll id="viewport" pin class="viewport" horizontal layout></ti-widget-container>
-  <ti-widget-tabcontainer id="tabcontainer" layout selected-index="0">
+  <ti-widget-tabcontainer id="tabcontainer" layout selected-index="1">
     <ti-widget-tab id="main_tab" name="Main" style=''>
       <div id="cy">
-        <ti-widget-label id="gw_bringup_label" label="Please connect a border router" text-align="center" font-size="xx-large" font-weight="900"></ti-widget-label>
       </div>
       <div id="coap_node_control_container" >
         <div id="coap_node_properties_container" style="margin-top: 20px;">
@@ -1988,21 +2004,21 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <ti-tile-toggleswitch id="toggle_led_green" font-size="medium" toggle-color="#10f43e" title-text="Toggle Green Router LED"></ti-tile-toggleswitch>
             <ti-tile-led id="led_state_green" title-text="Green LED State" font-size="medium" color="#10f43e" min-value="0" max-value="100" increment="20" labels="0,20,40,80,100" hide-ticks="false"></ti-tile-led>
           </div>
-        </div>  
-      </div>  
+        </div>
+      </div>
     </ti-widget-tab>
     <ti-widget-tab id="config_tab" name="Config">
         <ti-widget-container id="mainget_container_2" vertical layout one flex auto-scroll>
         </ti-widget-container>
         <ti-widget-tilecontainer id="getother_tilecontainer_2" auto-scroll wrap tile-title-background-color="#000000">
-            <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="Dodag Route" selected-value="{{tabIndex}}" selected-index="1"></ti-widget-droplist>
+            <ti-widget-droplist id="getotherlist_dropdown_1" labels="Connected Devices|Dodag Route|IPV6 Addresses|Mac Filter List" values="0|1|2|3" selected-text="Connected Devices" selected-value="{{tabIndex}}" selected-index="0"></ti-widget-droplist>
             <ti-widget-tabcontainer id="macfilterlist_tab_2" selected-index="{{tabIndex}}" layout hide-tab-labels>
                 <ti-widget-tab id="connectedevices_tab_1">
                     <ti-widget-container id="container_61" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox_1" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" values="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_connecteddevices_1" selected-text="ex1" selected-value="ex1" selected-index="0" tooltips="first|second|third"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="connecteddevices_label_1" label="Connected Devices:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
-                    <ti-widget-textbox id="get_numconnecteddevices_1" value="20" font-weight="bold" disabled></ti-widget-textbox>
+                    <ti-widget-textbox id="get_numconnecteddevices_1" value="0" font-weight="bold" disabled></ti-widget-textbox>
                 </ti-widget-tab>
                 <ti-widget-tab id="dodagroute_tab_1">
                     <ti-widget-container id="ti_widget_containercontainer_47" auto-scroll class="row" horizontal layout center>
@@ -2011,24 +2027,25 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <ti-widget-button id="set_dodagroutedest_button_1" label="Update" button-type="primary" raised bindable-trigger="4" layout horizontal></ti-widget-button>
                     </ti-widget-container>
                     <ti-widget-container id="container_59" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_dodagroute_1" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="dodagroute_label_1" label="Dodag Route:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                 </ti-widget-tab>
                 <ti-widget-tab id="ipv6alladdresses_tab_1">
                     <ti-widget-container id="container_62" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox_2" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_ipv6alladdresses_1" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="ipv6alladdresses_label_1" label="IPV6 Addresses:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                 </ti-widget-tab>
                 <ti-widget-tab id="macfilterlist_tab_3">
                     <ti-widget-container id="container_63" auto-scroll class="row" horizontal layout center>
-                        <ti-widget-listbox id="listbox_3" selected-text="ex1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10|ex1|ex2|iex3|ex4|ex5|ex6|ex7|ex8|ex9|ex10"></ti-widget-listbox>
+                        <ti-widget-listbox id="get_macfilterlist_1" selected-text="label 1" selected-value="1" selected-index="0" tooltips="first|second|third" labels="label 1|label 2"></ti-widget-listbox>
                     </ti-widget-container>
                     <ti-widget-label id="macfilterlist_label_3" label="MacFilterList:" font-size="x-large" font-color="#ffffff"></ti-widget-label>
                 </ti-widget-tab>
             </ti-widget-tabcontainer>
         </ti-widget-tilecontainer>
+        <ti-widget-label id="gw_bringup_label_1" label="Please connect a border router" text-align="center" font-size="xx-large" font-weight="900"></ti-widget-label>
         <ti-widget-container id="mainget_container_1" vertical layout one flex auto-scroll>
             <ti-widget-label id="label_7" label="Properties:" font-size="x-large"></ti-widget-label>
             <ti-widget-container id="container_31" auto-scroll class="row" horizontal layout center>
@@ -2049,7 +2066,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </ti-widget-container>
             <ti-widget-container id="container_35" auto-scroll class="row" horizontal layout center>
                 <ti-widget-label id="label_53" class="label" label="NCP:CCAThreshold:"></ti-widget-label>
-                <ti-widget-textbox id="ncp_ccathreshold_1" one flex class="value" value="10"></ti-widget-textbox>
+                <ti-widget-textbox id="ncp_ccathreshold_1" one flex class="value"></ti-widget-textbox>
             </ti-widget-container>
             <ti-widget-container id="container_37" auto-scroll class="row" horizontal layout center>
                 <ti-widget-label id="label_54" class="label" label="NCP:TXPower:"></ti-widget-label>
@@ -2119,32 +2136,34 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <ti-widget-label id="label_74" class="label" label="MacFilterMode:"></ti-widget-label>
                 <ti-widget-droplist id="droplist" labels="0|1|2" selected-text="0" selected-value="1" selected-index="0"></ti-widget-droplist>
             </ti-widget-container>
+            <ti-widget-container id="container_75" auto-scroll class="row" horizontal layout center>
+                <ti-widget-button id="set" onClick="setMainProps()" label="set" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
+                <ti-widget-button id="get" onClick="getMainProps()" label="get" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
+            </ti-widget-container>
         </ti-widget-container>
-        <ti-widget-container id="mainget_container_3" vertical layout one flex auto-scroll>
+        <ti-widget-container id="mainget_container_3" vertical layout one flex auto-scroll nonvisible>
             <ti-widget-label id="label_10" label="Properties:" font-size="x-large"></ti-widget-label>
             <ti-widget-container id="container_71" auto-scroll class="row" horizontal layout center>
                 <ti-widget-label id="label_87" class="label" label="Interface:Up:"></ti-widget-label>
-                <ti-widget-led id="led" glow></ti-widget-led>
+                <ti-widget-led id="interfaceup_1" color="#00ff00" off-color="#ff0000"></ti-widget-led>
             </ti-widget-container>
             <ti-widget-container id="container_72" auto-scroll class="row" horizontal layout center>
                 <ti-widget-label id="label_88" class="label" label="Stack:Up:"></ti-widget-label>
-                <ti-widget-led id="led_1" glow></ti-widget-led>
+                <ti-widget-led id="stackup_1" color="#00ff00" off-color="#ff0000"></ti-widget-led>
             </ti-widget-container>
             <ti-widget-container id="container_73" auto-scroll class="row" horizontal layout center>
             </ti-widget-container>
             <ti-widget-container id="container_74" auto-scroll class="row" horizontal layout center>
-            <ti-widget-button id="start" label="start" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
-            <ti-widget-button id="reset" label="reset" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
+            <ti-widget-button id="start" onClick="setStartProps('true')" label="start" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
+            <ti-widget-button id="reset" onClick="setStartProps('false')" label="reset" button-type="secondary" raised bindable-trigger="4"></ti-widget-button>
             </ti-widget-container>
         </ti-widget-container>
-        <ti-widget-container id="container_60" auto-scroll class="row" horizontal layout center>
-            <ti-widget-button id="set" label="set" button-type="primary" raised bindable-trigger="1"></ti-widget-button>
-            <ti-widget-button id="get" label="get" button-type="secondary" raised bindable-trigger="4"></ti-widget-button></ti-widget-container>
+        <ti-widget-container id="container_60" auto-scroll class="row" horizontal layout center></ti-widget-container>
         <ti-widget-radio-group id="group" selected-text="Small">
         </ti-widget-radio-group>
     </ti-widget-tab>
 
-    <ti-widget-tab id="ping_tab" name="Ping">
+    <ti-widget-tab id="ping_tab" name="Ping" disabled visible>
       <iframe id="ping_iframe" src="app/ping/index.html" style="width:100%; height:100vh;"></iframe>
     </ti-widget-tab>
 
