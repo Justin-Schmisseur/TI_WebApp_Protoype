@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "./static/css/main.dba29f1c.chunk.css",
-    "main.js": "./static/js/main.bcfe9141.chunk.js",
-    "main.js.map": "./static/js/main.bcfe9141.chunk.js.map",
+    "main.css": "./static/css/main.de553263.chunk.css",
+    "main.js": "./static/js/main.5882dbe1.chunk.js",
+    "main.js.map": "./static/js/main.5882dbe1.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.d02c23f5.js",
     "runtime-main.js.map": "./static/js/runtime-main.d02c23f5.js.map",
-    "static/js/2.19767514.chunk.js": "./static/js/2.19767514.chunk.js",
-    "static/js/2.19767514.chunk.js.map": "./static/js/2.19767514.chunk.js.map",
+    "static/js/2.208e02ca.chunk.js": "./static/js/2.208e02ca.chunk.js",
+    "static/js/2.208e02ca.chunk.js.map": "./static/js/2.208e02ca.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.dba29f1c.chunk.css.map": "./static/css/main.dba29f1c.chunk.css.map",
-    "static/js/2.19767514.chunk.js.LICENSE.txt": "./static/js/2.19767514.chunk.js.LICENSE.txt",
-    "static/media/day_icon.8d84fdde.svg": "./static/media/day_icon.8d84fdde.svg",
-    "static/media/delay_icon.9b15b3cf.svg": "./static/media/delay_icon.9b15b3cf.svg",
-    "static/media/download_icon.3c6a8e03.svg": "./static/media/download_icon.3c6a8e03.svg",
-    "static/media/health_icon.ae5e5c90.svg": "./static/media/health_icon.ae5e5c90.svg",
-    "static/media/log_icon.f05e626f.svg": "./static/media/log_icon.f05e626f.svg",
-    "static/media/night_icon.abd364c8.svg": "./static/media/night_icon.abd364c8.svg"
+    "static/css/main.de553263.chunk.css.map": "./static/css/main.de553263.chunk.css.map",
+    "static/js/2.208e02ca.chunk.js.LICENSE.txt": "./static/js/2.208e02ca.chunk.js.LICENSE.txt",
+    "static/media/day_icon.4b712eab.svg": "./static/media/day_icon.4b712eab.svg",
+    "static/media/delay_icon.512f50d7.svg": "./static/media/delay_icon.512f50d7.svg",
+    "static/media/download_icon.87442492.svg": "./static/media/download_icon.87442492.svg",
+    "static/media/health_icon.a1730e96.svg": "./static/media/health_icon.a1730e96.svg",
+    "static/media/log_icon.a596c9f1.svg": "./static/media/log_icon.a596c9f1.svg",
+    "static/media/night_icon.ffe0e7dd.svg": "./static/media/night_icon.ffe0e7dd.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.d02c23f5.js",
-    "static/js/2.19767514.chunk.js",
-    "static/css/main.dba29f1c.chunk.css",
-    "static/js/main.bcfe9141.chunk.js"
+    "static/js/2.208e02ca.chunk.js",
+    "static/css/main.de553263.chunk.css",
+    "static/js/main.5882dbe1.chunk.js"
   ]
 }
